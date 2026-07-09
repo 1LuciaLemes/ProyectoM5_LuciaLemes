@@ -5,7 +5,7 @@ import "./styles/global.css"
 import "./styles/theme.css"
 import App from './App.tsx'
 import { CartProvider } from './contexts/Cart/CartProvider.tsx'
-import { ProductsProvider } from './providers/ProductsProvider.tsx'
+import { ProductsProvider } from './contexts/Products/ProductsProvider.tsx'
 
 
 createRoot(document.getElementById('root')!).render(

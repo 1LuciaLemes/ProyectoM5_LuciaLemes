@@ -2,29 +2,29 @@
 
 import type { Product } from "../contexts/Products/product.type";
 
-export const productsMock: Product[] = [
+export const productsMock: Product[] =  [
   {
-    id: "p1",
-    title: "Zapatillas Runner Pro",
-    description: "Zapatillas deportivas livianas ideales para running y entrenamiento.",
-    price: 89990,
-    imageUrl: "/images/runner-pro.jpg",
-    stock: 15,
+    id: "1",
+    title: "Ambre Nuit",
+    description: "Perfume unisex - notas ambarinas y florales",
+    image: "perfume1",
+    price: 125,
+    stock: 7,
   },
   {
-    id: "p2",
-    title: "Mochila Ergonómica",
-    description: "Mochila cómoda con soporte ergonómico para uso diario.",
-    price: 45990,
-    imageUrl: "/images/mochila-ergonomica.jpg",
-    stock: 8,
-  },
-  {
-    id: "p3",
-    title: "Auriculares ANC",
-    description: "Auriculares inalámbricos con cancelación activa de ruido.",
-    price: 129990,
-    imageUrl: "/images/auriculares-anc.jpg",
+    id: "2",
+    title: "Rouge Trafalgar",
+    description: "Perfume unisex - notas chipre y afrutadas",
+    image: "perfume2",
+    price: 135,
     stock: 12,
+  },
+  {
+    id: "3",
+    title: "Purple Oud",
+    description: "Perfume unisex - notas especiadas y de oud",
+    image: "perfume3",
+    price: 129,
+    stock: 10,
   },
 ];

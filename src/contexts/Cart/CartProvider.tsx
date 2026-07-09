@@ -1,4 +1,4 @@
-import { CartContext } from "../contexts/CartContext.type";
+import { CartContext } from "../Cart/CartContext.type";
 import type { CartItem } from "./cart.type";
 import type { Product } from "../Products/product.type";
 import React from "react";
