@@ -1,6 +1,6 @@
 // src/contexts/useProducts.ts
 import { useContext } from "react";
-import { ProductsContext } from "../contexts/ProductContext";
+import { ProductsContext } from "./ProductContext.type";
 
 export function useProducts() {
   const ctx = useContext(ProductsContext);

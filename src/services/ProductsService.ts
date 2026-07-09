@@ -1,6 +1,6 @@
 // mocks de los productos
 
-import type { Product } from "../types/product.type";
+import type { Product } from "../contexts/Products/product.type";
 
 export const productsMock: Product[] = [
   {

@@ -1,6 +1,6 @@
-import { CartContext } from "../contexts/CartContext";
-import type { CartItem } from "../types/cart.type";
-import type { Product } from "../types/product.type";
+import { CartContext } from "../contexts/CartContext.type";
+import type { CartItem } from "./cart.type";
+import type { Product } from "../Products/product.type";
 import React from "react";
 import { useState } from "react";
 
