@@ -81,3 +81,6 @@ categoría (adulto, niño) son consultas a la base de datos en Firestone para lo
 # 2. Añadir UI de filtros básica
 
 Añadí la UI referente a los filtros, para además visualizar que los cambios se estén aplicando.
+
+Modifiqué el archivo, porque habia hecho un botón genérico y sobre ese
+otro que en verdad trabajaban igual.

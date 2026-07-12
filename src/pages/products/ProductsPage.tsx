@@ -1,4 +1,7 @@
-import { ProductList } from "../../components/Products/ProductList";
+﻿import { ProductList } from "../../components/Products/ProductList";
+import { LoadingState } from "../../components/State/Loading.State";
+import { ErrorState } from "../../components/State/Error.State";
+import { EmptyState } from "../../components/State/Empty.State";
 import { getProducts } from "../../services/products/productsService";
 import {
   getFemaleProducts,
@@ -10,72 +13,49 @@ import {
   sortByHighestPrice,
   sortByLowestPrice,
 } from "../../utils/productsSort";
-import { FilterButton } from "../../components/Products/FilterButton";
+import { Button } from "../../UI/Button";
 import { useProducts } from "../../contexts/Products/useProducts";
 import type { Product } from "../../contexts/Products/product.type";
 import "./ProductsPage.css";
 
 export function ProductPage() {
-  const { products, setProducts } = useProducts();
+  const { products, setProducts, loading, error } = useProducts();
 
   const applyProductFilter = (
     filter: (products: Product[]) => Product[]
   ) => {
     const filteredProducts = filter(products);
-
     setProducts(filteredProducts);
   };
 
   const applyAsyncFilter = async (
-  filter: () => Promise<Product[]>
-) => {
-  const filteredProducts = await filter();
-
-  setProducts(filteredProducts);
-};
+    filter: () => Promise<Product[]>
+  ) => {
+    const filteredProducts = await filter();
+    setProducts(filteredProducts);
+  };
 
   return (
     <main>
-      <h1>Fragancias</h1>
+      <h1>ƒragranza</h1>
 
       <div>
-        <FilterButton
-          label="Todos"
-          onClick={() => applyAsyncFilter(getProducts)}
-        />
-
-        <FilterButton
-          label="Femenino"
-          onClick={() => applyAsyncFilter(getFemaleProducts)}
-        />
-
-        <FilterButton
-          label="Masculino"
-          onClick={() => applyAsyncFilter(getMaleProducts)}
-        />
-
-        <FilterButton
-          label="Niños"
-          onClick={() => applyAsyncFilter(getChildProducts)}
-        />
-
-        <FilterButton
-          label="Unisex"
-          onClick={() => applyAsyncFilter(getUnisexProducts)}
-        />
-
-        <FilterButton
-          label="Mayor Precio"
-          onClick={() => applyProductFilter(sortByHighestPrice)}
-        />
-
-        <FilterButton
-          label="Menor Precio"
-          onClick={() => applyProductFilter(sortByLowestPrice)}
-        />
+        <Button onClick={() => applyAsyncFilter(getProducts)}>Todos</Button>
+        <Button onClick={() => applyAsyncFilter(getFemaleProducts)}>Femenino</Button>
+        <Button onClick={() => applyAsyncFilter(getMaleProducts)}>Masculino</Button>
+        <Button onClick={() => applyAsyncFilter(getChildProducts)}>Niños</Button>
+        <Button onClick={() => applyAsyncFilter(getUnisexProducts)}>Unisex</Button>
+        <Button onClick={() => applyProductFilter(sortByHighestPrice)}>Mayor Precio</Button>
+        <Button onClick={() => applyProductFilter(sortByLowestPrice)}>Menor Precio</Button>
       </div>
 
-      <ProductList />
+      <ErrorState id="products" error={error} fallback={<p>No se pudieron cargar los productos.</p>}>
+        <LoadingState id="products" loading={loading} fallback={<p>Cargando productos...</p>}>
+          <EmptyState id="products" isEmpty={products.length === 0}>
+            <ProductList />
+          </EmptyState>
+        </LoadingState>
+      </ErrorState>
     </main>
   );
 }
