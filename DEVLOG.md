@@ -69,6 +69,7 @@ Los cambios principales fueron:
 ## 12/07/2026
 
 # 1. Implementación de filtros 
+
 Realicé los filtros de búsqueda necesarios para la página, modifiqué el type de products para que sea
 compatible con las categorias.
 
@@ -76,3 +77,7 @@ compatible con las categorias.
 categoría (adulto, niño) son consultas a la base de datos en Firestone para lograr una mejor escalabilidad el día de mañana.
 
 - Ordenamiento de productos: son los "filtros" que reciben ya los productos de la base de datos y los ordenan, en este caso por: menor/mayor precio y por último añadido al catálogo. 
+
+# 2. Añadir UI de filtros básica
+
+Añadí la UI referente a los filtros, para además visualizar que los cambios se estén aplicando.

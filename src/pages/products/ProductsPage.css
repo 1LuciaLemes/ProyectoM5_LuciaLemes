@@ -6,3 +6,19 @@
     flex-direction: row;
     gap: 0.5rem;
 }
+
+button {
+  background: transparent;
+  padding: 0;
+  margin: 0;
+
+  color: inherit;
+  font: inherit;
+
+  cursor: pointer;
+  outline: none;
+}
+
+button:hover {
+  background-color: var(--button-hover);
+}

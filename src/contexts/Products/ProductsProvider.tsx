@@ -1,5 +1,5 @@
 import type React from "react";
-import { getProducts } from "../../services/products/ProductsService";
+import { getProducts } from "../../services/products/productsService";
 import { useEffect, useState } from "react";
 import { ProductsContext } from "../Products/ProductContext.type";
 import type { Product } from "./product.type";
@@ -22,7 +22,8 @@ export function ProductsProvider({ children }: { children: React.ReactNode }) {
     return (
         <ProductsContext.Provider
             value={{
-                products
+                products,
+                setProducts
             }}
         >
             {children}
