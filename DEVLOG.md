@@ -51,10 +51,28 @@ Donde se creó la estructura necesaria para manejar el carrito:
 - El Provider para exponer la información a la app.
 - Custom Hook para validar el uso del contexto correctamente.
 
-## 09/07/2026
+## 11/07/2026
 
-objetivos: 
-- agregar llamado a firebase, conectar base de datos, indexs para filtrar productos
-recordar: manejar try/catch para los errores
-- agregar loading, succes, error para comunicar al usuario qué sucede en la app, depende del
-estado que se va seteando cuando llega (o no) la respuesta del fetch a la base de datos
+# Conexión de Firebase con Firestore para productos
+
+En esta parte del desarrollo realicé la conexión del proyecto con Firebase para empezar a trabajar con una base de datos real.
+
+Hasta este momento los productos se estaban obteniendo desde un mock, por lo que actualicé el `productsService` para que ahora pueda hacer las consultas directamente a Firestore y traer la información almacenada en la base de datos.
+
+Los cambios principales fueron:
+
+- Configuré Firebase dentro del proyecto.
+- Conecté la aplicación con Firestore.
+- Modifiqué las funciones de `productsService` para reemplazar la lógica anterior por consultas a Firestore.
+- Probé la obtención de productos desde la base de datos.
+
+## 12/07/2026
+
+# 1. Implementación de filtros 
+Realicé los filtros de búsqueda necesarios para la página, modifiqué el type de products para que sea
+compatible con las categorias.
+
+- Filtros con consultas directas a firestone: Los filtros por género (masculino, femenino, unisex) y por
+categoría (adulto, niño) son consultas a la base de datos en Firestone para lograr una mejor escalabilidad el día de mañana.
+
+- Ordenamiento de productos: son los "filtros" que reciben ya los productos de la base de datos y los ordenan, en este caso por: menor/mayor precio y por último añadido al catálogo. 
