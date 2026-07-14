@@ -1,64 +1,52 @@
-import { CartContext } from "../Cart/CartContext.type";
-import type { CartItem } from "./cart.type";
+import { useReducer } from "react";
+import { CartReducer, initialState } from "./cart.reducer";
+import { CartContext } from "./CartContext.type";
 import type { Product } from "../Products/product.type";
-import React from "react";
-import { useState } from "react";
 
-export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>([]);
+export function CartProvider ({children}: {children: React.ReactNode}){ 
+  const [state, dispatch] = useReducer(CartReducer, initialState);
 
-  // funcion addItem
-  const addItem = (product: Product) => {
-    setItems((prevCart) => {
-      const existingItem = prevCart.find(
-        (item) => item.productId === product.id,
-      );
+  const total = state.items.reduce(
+    (acc, item) => acc + item.price * item.quantity, 0
+  )
 
-      if (existingItem) {
-        return prevCart.map((item) =>
-          item.productId === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item,
-        );
-      }
+  const totalItems = state.items.reduce(
+    (acc, item) => acc + item.quantity, 0
+  )
 
-      return [
-        ...prevCart,
-        {
-          productId: product.id,
-          quantity: 1,
-        },
-      ];
-    });
-  };
+  function addItem(product: Product) {
+    dispatch({
+      type: "ADD_ITEM",
+      payload: product,
+    }) 
+  }
 
-  // funcion removeitem
-  const removeItem = (productId: string) => {
-    setItems((prevCart) => {
-      const item = prevCart.find((item) => item.productId === productId);
+  function removeItem(id: string) {
+    dispatch({
+      type: "REMOVE_ITEM",
+      payload: id,
+    })
+  }
 
-      if (!item) return prevCart;
-
-      if (item.quantity === 1) {
-        return prevCart.filter((item) => item.productId !== productId);
-      }
-
-      return prevCart.map((item) =>
-        item.productId === productId
-          ? { ...item, quantity: item.quantity - 1 }
-          : item,
-      );
-    });
-  };
-
-  // función limpiar carrito
-  const clearCart = () => {
-    setItems([]);
-  };
+  function clearCart() {
+    dispatch({
+      type: "CLEAR_CART",
+    })
+  }
 
   return (
-    <CartContext.Provider value={{ items, addItem, removeItem, clearCart }}>
+    <CartContext.Provider
+      value={{
+        items: state.items,
+        total,
+        totalItems,
+
+        addItem,
+        removeItem,
+        clearCart,
+      }}
+    >
       {children}
     </CartContext.Provider>
-  );
+  )
 }

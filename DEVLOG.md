@@ -84,3 +84,17 @@ Añadí la UI referente a los filtros, para además visualizar que los cambios s
 
 Modifiqué el archivo, porque habia hecho un botón genérico y sobre ese
 otro que en verdad trabajaban igual.
+
+# 3. Añadir estados base reutilizables
+
+Agregué los estados de loading, error, empty (falta succes) para manejar los estados visuales que se le informan al usuario cuando carga productos.
+
+## 13/07/2026
+
+# El carrito pasa de trabajar con useState a useReducer
+
+Se modifica la lógica de cómo trabaja el carrito, pasando de useState a useReducer.
+
+Elegí useReducer porque el carrito tiene varias operaciones que afectan el mismo estado. En lugar de realizar varias actualizaciones con useState, con useReducer cada operación se representa mediante una acción, por ejemplo ADD_ITEM, REMOVE_ITEM o CLEAR_CART, que se envía mediante dispatch.
+
+El reducer recibe esa acción y, según el valor de action.type, ejecuta la lógica correspondiente para devolver el nuevo estado. De esta forma, toda la lógica de actualización queda centralizada en un solo lugar, haciendo el código más organizado, fácil de mantener y escalable.
