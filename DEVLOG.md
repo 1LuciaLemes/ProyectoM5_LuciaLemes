@@ -98,3 +98,9 @@ Se modifica la lógica de cómo trabaja el carrito, pasando de useState a useRed
 Elegí useReducer porque el carrito tiene varias operaciones que afectan el mismo estado. En lugar de realizar varias actualizaciones con useState, con useReducer cada operación se representa mediante una acción, por ejemplo ADD_ITEM, REMOVE_ITEM o CLEAR_CART, que se envía mediante dispatch.
 
 El reducer recibe esa acción y, según el valor de action.type, ejecuta la lógica correspondiente para devolver el nuevo estado. De esta forma, toda la lógica de actualización queda centralizada en un solo lugar, haciendo el código más organizado, fácil de mantener y escalable.
+
+## 14/07/2026
+
+# Authentication
+
+Añadí la lógica para la atenticación desde firebase, con los roles incluídos, de customer y de admin, realicé el service, el type, context, 
