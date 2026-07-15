@@ -1,29 +1,30 @@
 import type { Timestamp } from "firebase/firestore";
 
-export type ProductImage =
-  | "perfume1"
-  | "perfume2"
-  | "perfume3";
+export type ProductGender = "female" | "male" | "unisex";
 
-export type ProductGender =
-  | "male"
-  | "female"
-  | "unisex";
-
-export type ProductCategory =
-  | "adult"
-  | "child";
+export type ProductBrand =
+  | "Dior"
+  | "Giorgio Armani"
+  | "Chanel"
+  | "Yves Saint Laurent"
+  | "Tom Ford"
+  | "Creed"
+  | "Maison Francis Kurkdjian"
+  | "Tous";
 
 export type Product = {
   id: string;
+
   title: string;
-  image: ProductImage;
+  brand: ProductBrand;
+
+  image: string;
   description: string;
+
   price: number;
   stock: number;
 
   gender: ProductGender;
-  category: ProductCategory;
 
   createdAt: Timestamp;
 };

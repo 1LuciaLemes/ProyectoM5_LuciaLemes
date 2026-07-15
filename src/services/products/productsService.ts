@@ -2,7 +2,7 @@ import { db } from "../firebase/firebase";
 import type { Product } from "../../contexts/Products/product.type";
 import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 
-const productsRef = collection(db, "perfumes");
+const productsRef = collection(db, "products");
 
 export const getProducts = async (): Promise<Product[]> => {
 

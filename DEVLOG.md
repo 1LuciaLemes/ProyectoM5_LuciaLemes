@@ -103,4 +103,10 @@ El reducer recibe esa acción y, según el valor de action.type, ejecuta la lóg
 
 # Authentication
 
-Añadí la lógica para la atenticación desde firebase, con los roles incluídos, de customer y de admin, realicé el service, el type, context, 
+Añadí la lógica para la autenticación desde firebase, con los roles incluídos, de customer y de admin, realicé el service, el type, context.
+
+## 14/07/2026
+
+# Seed
+
+Realicé el seed para cargar los productos (por ahora con imagenes random), aproveche para modificar los filtros y añadir un filtro por marca, y probarlo visualmente. (Me sigue faltando generar toda la estética general)

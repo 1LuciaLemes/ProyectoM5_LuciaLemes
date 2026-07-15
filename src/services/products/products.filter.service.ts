@@ -1,5 +1,5 @@
 import { db } from "../firebase/firebase";
-import type { Product } from "../../contexts/Products/product.type";
+import type { Product, ProductBrand } from "../../contexts/Products/product.type";
 import {
   collection,
   getDocs,
@@ -7,12 +7,12 @@ import {
   where,
 } from "firebase/firestore";
 
-const productsRef = collection(db, "perfumes");
+const productsRef = collection(db, "products");
+
 export const getMaleProducts = async (): Promise<Product[]> => {
   try {
     const productRef = query(
       productsRef,
-      where("category", "==", "adult"),
       where("gender", "in", ["male", "unisex"]),
     );
 
@@ -35,7 +35,6 @@ export const getFemaleProducts = async (): Promise<Product[]> => {
   try {
     const productRef = query(
       productsRef,
-      where("category", "==", "adult"),
       where("gender", "in", ["female", "unisex"]),
     );
 
@@ -50,25 +49,6 @@ export const getFemaleProducts = async (): Promise<Product[]> => {
     );
   } catch (error) {
     console.error("Error obteniendo perfumes femeninos:", error);
-    throw error;
-  }
-};
-
-export const getChildProducts = async (): Promise<Product[]> => {
-  try {
-    const productRef = query(productsRef, where("category", "==", "child"));
-
-    const childProdSnapshot = await getDocs(productRef);
-
-    return childProdSnapshot.docs.map(
-      (doc) =>
-        ({
-          id: doc.id,
-          ...doc.data(),
-        }) as Product,
-    );
-  } catch (error) {
-    console.error("Error obteniendo perfumes infantiles:", error);
     throw error;
   }
 };
@@ -91,6 +71,30 @@ export const getUnisexProducts = async (): Promise<Product[]> => {
     );
   } catch (error) {
     console.error("Error obteniendo perfumes unisex:", error);
+    throw error;
+  }
+};
+
+export const getProductsByBrand = async (
+  brand: ProductBrand
+): Promise<Product[]> => {
+  try {
+    const productRef = query(
+      productsRef,
+      where("brand", "==", brand)
+    );
+
+    const snapshot = await getDocs(productRef);
+
+    return snapshot.docs.map(
+      (doc) =>
+        ({
+          id: doc.id,
+          ...doc.data(),
+        }) as Product
+    );
+  } catch (error) {
+    console.error(`Error obteniendo perfumes de ${brand}:`, error);
     throw error;
   }
 };

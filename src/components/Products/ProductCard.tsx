@@ -1,5 +1,4 @@
-﻿import { productImages } from "../../utils/productImages";
-import type { Product } from "../../contexts/Products/product.type";
+﻿import type { Product } from "../../contexts/Products/product.type";
 import { useCart } from "../../contexts/Cart/useCart";
 import "./ProductCard.css"
 import { Button } from "../../UI/Button";
@@ -15,7 +14,7 @@ export function ProductCard({product} : ProductCardProps) {
     <article className="product-item">
       <img
         className="product-item-img"
-        src={productImages[product.image]}
+        src={product.image}
         alt={product.title}
       />
 
