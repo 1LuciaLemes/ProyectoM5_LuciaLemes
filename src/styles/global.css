@@ -1,1 +1,46 @@
 @import "tailwindcss";
+/* HEADER GLOBAL */
+header.site-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: stretch;
+  justify-content: center;
+  padding: 1rem;
+  margin: 0;
+}
+
+header.site-header a {
+  color: var(--button-bg);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  text-align: center;
+  width: 100%;
+}
+
+header.site-header a:hover {
+  background: var(--button-hover);
+  color: var(--button-text);
+  transform: translateY(-1px);
+}
+
+header.site-header a.active {
+  background: var(--button-bg);
+  color: var(--button-text);
+}
+
+@media (min-width: 680px) {
+  header.site-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 1rem 2rem;
+  }
+
+  header.site-header a {
+    width: auto;
+  }
+}

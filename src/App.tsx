@@ -1,12 +1,12 @@
 import type {JSX} from "react";
-import { ThemeButton } from "./components/changeTheme";
-import { ProductPage } from "./pages/products/ProductsPage";
+import { AppRoutes } from "./routes/AppRoutes";
+import { Header } from "./components/Header";
 
 function App(): JSX.Element {
   return (
     <div style={{padding: "2rm"}}>
-      <ThemeButton />
-      <ProductPage />
+      <Header />
+      <AppRoutes />
     </div>
   )
 }

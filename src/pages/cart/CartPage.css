@@ -1,0 +1,134 @@
+.cart-page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  min-height: 100vh;
+  color: var(--text-primary);
+}
+
+.cart-page h1 {
+  margin: 0 0 1rem;
+  font-size: clamp(2rem, 2.5vw, 2.5rem);
+}
+
+.cart-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 1rem;
+  background: var(--card-bg);
+  box-shadow: 0 2px 8px var(--shadow-color);
+  margin-bottom: 1.5rem;
+}
+
+.cart-header p {
+  margin: 0;
+  font-weight: 600;
+}
+
+.cart-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 96px 1fr auto;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 1rem;
+  background: var(--card-bg);
+  box-shadow: 0 1px 4px var(--shadow-color);
+  align-items: center;
+}
+
+.cart-item-image {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 1rem;
+  background: var(--bg-secondary);
+}
+
+.cart-item-info {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.cart-item-info h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.cart-item-info p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.cart-item-info span {
+  display: block;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.cart-item-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cart-item-remove,
+.cart-clear-btn {
+  background-color: #ef4444;
+  color: #ffffff;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+}
+
+.cart-item-remove:hover,
+.cart-clear-btn:hover {
+  background-color: #dc2626;
+}
+
+.cart-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cart-empty {
+  padding: 2rem;
+  border: 1px dashed var(--border-color);
+  border-radius: 1rem;
+  background: var(--card-bg);
+  text-align: center;
+}
+
+.cart-empty p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+@media (max-width: 680px) {
+  .cart-item {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .cart-item-actions {
+    justify-content: center;
+  }
+
+  .cart-header {
+    justify-content: center;
+  }
+}
