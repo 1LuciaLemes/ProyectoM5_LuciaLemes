@@ -105,8 +105,23 @@ El reducer recibe esa acción y, según el valor de action.type, ejecuta la lóg
 
 Añadí la lógica para la autenticación desde firebase, con los roles incluídos, de customer y de admin, realicé el service, el type, context.
 
-## 14/07/2026
+## 15/07/2026
 
 # Seed
 
 Realicé el seed para cargar los productos (por ahora con imagenes random), aproveche para modificar los filtros y añadir un filtro por marca, y probarlo visualmente. (Me sigue faltando generar toda la estética general)
+
+## 17/07/2026
+
+# 1 Navegación de la app
+
+Implementé la navegación de la app, generé cada página que planeo precisar, por ahora (me falta la pagina del producto individual). Falta implementar las paginas con autenticación, para admin y para user.
+
+# 2 Diferenciar logueo entre admin y usuario
+
+Agregué ProtectedRoute para diferenciar el logueo entre usuarios y admin.
+
+- La sesión persiste aunque se recargue la página
+- Se diferencia entre rol admin/customer, cada cual ve las rutas que debe
+- Se añadió formulario para iniciar sesión/registrarse 
+- Añadi el componente (btn) para cerrar sesión

@@ -6,6 +6,7 @@ import {OrderPage} from "../pages/order/OrderPage";
 import { SigninPage } from "../pages/signin/SigninPage";
 import { SignupPage } from "../pages/signup/SignupPage";
 import { AdminPage } from "../pages/admin/AdminPage";
+import { ProtectedRoute } from "./ProtectedRoute";
 
 
 export const AppRoutes = () => {
@@ -16,9 +17,16 @@ export const AppRoutes = () => {
             <Route path="/signin" element={<SigninPage />}></Route>
             <Route path="/signup" element={<SignupPage />}></Route>
 
-            <Route path="/cart" element={<CartPage />}></Route>
-            <Route path="/orders" element={<OrderPage />}></Route>
-            <Route path="/admin" element={<AdminPage />}></Route>
+            <Route element={<ProtectedRoute /> }>
+                <Route path="/cart" element={<CartPage />}></Route>
+                <Route path="/orders" element={<OrderPage />}></Route>
+            </Route>
+
+            <Route element={<ProtectedRoute requiredRole={"admin"} /> }>
+                <Route path="/admin" element={<AdminPage />}></Route>
+                <Route path="/admin/products" element={<AdminPage />}></Route>
+                <Route path="/admin/orders" element={<AdminPage />}></Route>
+            </Route>
         </Routes>
     )
 }

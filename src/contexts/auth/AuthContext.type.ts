@@ -5,7 +5,7 @@ export type AuthContextType = {
     user: AuthUser | null;
     loading: boolean;
 
-    signup: (email: string, password:string) => Promise<AuthUser>;
+    signup: (name: string, email: string, password:string) => Promise<AuthUser>;
     signin: (email: string, password:string) => Promise<AuthUser>;
     signinWhitGoogle: () => Promise<AuthUser>;
     logout: () => Promise<void>;

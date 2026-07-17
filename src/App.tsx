@@ -4,7 +4,7 @@ import { Header } from "./components/Header";
 
 function App(): JSX.Element {
   return (
-    <div style={{padding: "2rm"}}>
+    <div>
       <Header />
       <AppRoutes />
     </div>

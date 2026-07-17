@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { AuthUser } from "./auth.type";
-import { AuthContext } from "./authContext.type";
+import { AuthContext } from "./AuthContext.type";
 import { auth } from "../../services/firebase/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import {
@@ -27,11 +27,27 @@ export const AuthProvider = ({ children }: Props) => {
       }
 
       const profile = await getUserProfileService(firebaseUser.uid);
-      setUser(profile);
+
+      if (profile) {
+        setUser(profile);
+      } else if (firebaseUser.email) {
+        setUser({
+          uid: firebaseUser.uid,
+          email: firebaseUser.email,
+          role: "customer",
+        });
+      } else {
+        setUser(null);
+      }
+
       setLoading(false);
     });
     return unsuscribe;
   }, []);
+
+  const signupWithName = async (name: string, email: string, password: string) => {
+    return signUpService(name, email, password);
+  };
 
   return (
     <AuthContext.Provider
@@ -39,7 +55,7 @@ export const AuthProvider = ({ children }: Props) => {
         user: user,
         loading: loading,
         signin: signInService,
-        signup: signUpService,
+        signup: signupWithName,
         logout: logoutService,
         signinWhitGoogle: signinWhitGoogleService,
       }}

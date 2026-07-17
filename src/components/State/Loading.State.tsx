@@ -3,14 +3,14 @@ import type { ReactNode } from "react";
 type LoadingStateProps = {
   id: string;
   loading: boolean;
-  children: ReactNode;
+  children?: ReactNode;
   fallback?: ReactNode;
 };
 
 export function LoadingState({
   id,
   loading,
-  children,
+  children = null,
   fallback = <p>Cargando...</p>,
 }: LoadingStateProps) {
   return (
