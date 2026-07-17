@@ -6,6 +6,8 @@ import {OrderPage} from "../pages/order/OrderPage";
 import { SigninPage } from "../pages/signin/SigninPage";
 import { SignupPage } from "../pages/signup/SignupPage";
 import { AdminPage } from "../pages/admin/AdminPage";
+import { AdminProductsPage } from "../pages/admin/AdminProductsPage";
+import { AdminOrdersPage } from "../pages/admin/AdminOrdersPage";
 import { ProtectedRoute } from "./ProtectedRoute";
 
 
@@ -23,9 +25,11 @@ export const AppRoutes = () => {
             </Route>
 
             <Route element={<ProtectedRoute requiredRole={"admin"} /> }>
-                <Route path="/admin" element={<AdminPage />}></Route>
-                <Route path="/admin/products" element={<AdminPage />}></Route>
-                <Route path="/admin/orders" element={<AdminPage />}></Route>
+                <Route path="/admin" element={<AdminPage />}>
+                    <Route index element={<AdminProductsPage />} />
+                    <Route path="products" element={<AdminProductsPage />} />
+                    <Route path="orders" element={<AdminOrdersPage />} />
+                </Route>
             </Route>
         </Routes>
     )

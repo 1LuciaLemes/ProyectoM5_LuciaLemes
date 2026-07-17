@@ -1,7 +1,7 @@
-﻿import type { Product } from "../../contexts/Products/product.type";
-import { useCart } from "../../contexts/Cart/useCart";
+﻿import type { Product } from "../../../contexts/Products/product.type";
+import { useCart } from "../../../contexts/Cart/useCart";
 import "./ProductCard.css"
-import { Button } from "../../UI/Button";
+import { Button } from "../../../UI/Button";
 
 type ProductCardProps = {
   product: Product;

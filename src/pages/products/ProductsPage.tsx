@@ -1,7 +1,8 @@
-﻿import { ProductList } from "../../components/Products/ProductList";
+﻿import { ProductList } from "../../components/Products/List/ProductList";
 import { LoadingState } from "../../components/State/Loading.State";
 import { ErrorState } from "../../components/State/Error.State";
 import { EmptyState } from "../../components/State/Empty.State";
+import { getProducts } from "../../services/products/productsService";
 import {
   getFemaleProducts,
   getMaleProducts,
