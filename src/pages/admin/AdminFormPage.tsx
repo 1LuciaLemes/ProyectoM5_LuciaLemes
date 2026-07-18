@@ -1,9 +1,17 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import type { Product, ProductBrand, ProductGender } from "../../contexts/Products/product.type";
+import type {
+  Product,
+  ProductBrand,
+  ProductGender,
+} from "../../contexts/Products/product.type";
 import { useProducts } from "../../contexts/Products/useProducts";
-import { addProduct, updateProduct } from "../../services/products/productsService";
+import {
+  addProduct,
+  updateProduct,
+} from "../../services/products/productsService";
 import "./admin.css";
+import { uploadImage } from "../../services/imgPresign/img.service";
 
 type ProductFormFields = {
   title: string;
@@ -28,6 +36,16 @@ const createInitialFields = (): ProductFormFields => ({
   image: "",
 });
 
+const availableBrands: ProductBrand[] = [
+  "Dior",
+  "Giorgio Armani",
+  "Chanel",
+  "Yves Saint Laurent",
+  "Tom Ford",
+  "Creed",
+  "Maison Francis Kurkdjian",
+];
+
 const toFormFields = (product?: Product | null): ProductFormFields => ({
   title: product?.title ?? "",
   brand: product?.brand ?? "",
@@ -41,7 +59,9 @@ const toFormFields = (product?: Product | null): ProductFormFields => ({
 const validateField = (field: keyof ProductFormFields, value: string) => {
   switch (field) {
     case "title":
-      return value.trim() ? undefined : "El nombre del producto es obligatorio.";
+      return value.trim()
+        ? undefined
+        : "El nombre del producto es obligatorio.";
     case "brand":
       return value ? undefined : "Seleccioná una marca.";
     case "description":
@@ -93,13 +113,20 @@ export const AdminFormPage = () => {
   const initialProduct = productId
     ? products.find((currentProduct) => currentProduct.id === productId)
     : null;
-  const [formFields, setFormFields] = useState<ProductFormFields>(() => toFormFields(initialProduct));
+  const [formFields, setFormFields] = useState<ProductFormFields>(() =>
+    toFormFields(initialProduct),
+  );
+  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
   const [formErrors, setFormErrors] = useState<ProductFormErrors>({});
   const [formStatus, setFormStatus] = useState<ProductFormStatus>("editing");
   const [globalError, setGlobalError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const [selectedProductId, setSelectedProductId] = useState<string | null>(productId ?? null);
-  const [touchedFields, setTouchedFields] = useState<Partial<Record<keyof ProductFormFields, boolean>>>({});
+  const [selectedProductId, setSelectedProductId] = useState<string | null>(
+    productId ?? null,
+  );
+  const [touchedFields, setTouchedFields] = useState<
+    Partial<Record<keyof ProductFormFields, boolean>>
+  >({});
 
   const resetForm = () => {
     setFormFields(createInitialFields());
@@ -110,6 +137,7 @@ export const AdminFormPage = () => {
     setFormStatus("editing");
     setSelectedProductId(null);
     navigate("/admin/products/form");
+    setSelectedImageFile(null);
   };
 
   const handleFieldChange = (field: keyof ProductFormFields, value: string) => {
@@ -136,7 +164,10 @@ export const AdminFormPage = () => {
   };
 
   const handleFieldBlur = (field: keyof ProductFormFields) => {
-    setTouchedFields((previousTouched) => ({ ...previousTouched, [field]: true }));
+    setTouchedFields((previousTouched) => ({
+      ...previousTouched,
+      [field]: true,
+    }));
     const fieldError = validateField(field, formFields[field]);
     setFormErrors((previousErrors) => {
       const nextErrors = { ...previousErrors };
@@ -150,6 +181,7 @@ export const AdminFormPage = () => {
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+      console.log("entre al handlesubmit");
     event.preventDefault();
 
     const allTouched = Object.keys(formFields).reduce(
@@ -162,6 +194,7 @@ export const AdminFormPage = () => {
     setFormErrors(nextErrors);
 
     if (Object.keys(nextErrors).length > 0) {
+      console.log("Errores del formulario:", nextErrors);
       setFormStatus("error");
       setGlobalError(null);
       return;
@@ -171,6 +204,13 @@ export const AdminFormPage = () => {
     setGlobalError(null);
 
     try {
+      console.log("entre al try del handlesubmit");
+      let imageUrl = formFields.image.trim();
+
+      if (selectedImageFile) {
+        imageUrl = await uploadImage(selectedImageFile);
+      }
+
       const productPayload = {
         title: formFields.title.trim(),
         brand: formFields.brand as ProductBrand,
@@ -178,18 +218,26 @@ export const AdminFormPage = () => {
         price: Number(formFields.price),
         stock: Number(formFields.stock),
         gender: formFields.gender as ProductGender,
-        image: formFields.image.trim() || "https://placehold.co/300x300?text=Sin+imagen",
+        image: imageUrl || "https://placehold.co/300x300?text=Sin+imagen",
       };
 
       if (selectedProductId) {
-        const updatedProduct = await updateProduct(selectedProductId, productPayload);
+        const updatedProduct = await updateProduct(
+          selectedProductId,
+          productPayload,
+        );
         setProducts((previousProducts) =>
-          previousProducts.map((product) => (product.id === selectedProductId ? updatedProduct : product)),
+          previousProducts.map((product) =>
+            product.id === selectedProductId ? updatedProduct : product,
+          ),
         );
         setSuccessMessage("Producto actualizado con éxito.");
       } else {
         const createdProduct = await addProduct(productPayload);
-        setProducts((previousProducts) => [createdProduct, ...previousProducts]);
+        setProducts((previousProducts) => [
+          createdProduct,
+          ...previousProducts,
+        ]);
         setSuccessMessage("Producto creado con éxito.");
       }
 
@@ -213,23 +261,33 @@ export const AdminFormPage = () => {
     <main className="admin-page">
       <header className="admin-page-header">
         <div>
-          <h1 className="admin-page-title">{selectedProductId ? "Editar producto" : "Crear producto"}</h1>
+          <h1 className="admin-page-title">
+            {selectedProductId ? "Editar producto" : "Crear producto"}
+          </h1>
         </div>
         <div className="admin-page-actions">
           <Link to="/admin/products" className="admin-btn admin-btn-secondary">
             Volver a productos
           </Link>
-          <button type="button" onClick={resetForm} className="admin-btn admin-btn-secondary">
+          <button
+            type="button"
+            onClick={resetForm}
+            className="admin-btn admin-btn-secondary"
+          >
             Limpiar
           </button>
         </div>
       </header>
 
-      {successMessage && <p className="form-success-banner">{successMessage}</p>}
+      {successMessage && (
+        <p className="form-success-banner">{successMessage}</p>
+      )}
       {globalError && <p className="form-global-error">{globalError}</p>}
 
-      <section className="admin-card admin-form-card" aria-labelledby="product-form-title">
-
+      <section
+        className="admin-card admin-form-card"
+        aria-labelledby="product-form-title"
+      >
         <form className="product-form" onSubmit={handleSubmit} noValidate>
           <div className="form-grid">
             <label className="form-field">
@@ -237,32 +295,35 @@ export const AdminFormPage = () => {
               <input
                 type="text"
                 value={formFields.title}
-                onChange={(event: ChangeEvent<HTMLInputElement>) => handleFieldChange("title", event.target.value)}
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  handleFieldChange("title", event.target.value)
+                }
                 onBlur={() => handleFieldBlur("title")}
                 disabled={formStatus === "submitting"}
                 placeholder="Ej. Dolce & Gabbana"
               />
-              {formErrors.title && <small className="form-field-error">{formErrors.title}</small>}
+              {formErrors.title && (
+                <small className="form-field-error">{formErrors.title}</small>
+              )}
             </label>
 
             <label className="form-field">
-              <span>Marca</span>
-              <select
-                value={formFields.brand}
-                onChange={(event: ChangeEvent<HTMLSelectElement>) => handleFieldChange("brand", event.target.value)}
-                onBlur={() => handleFieldBlur("brand")}
+              <span>Imagen</span>
+
+              <input
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                  const file = event.target.files?.[0] ?? null;
+                  setSelectedImageFile(file);
+                }}
                 disabled={formStatus === "submitting"}
-              >
-                <option value="">Seleccioná una marca</option>
-                <option value="Dior">Dior</option>
-                <option value="Giorgio Armani">Giorgio Armani</option>
-                <option value="Chanel">Chanel</option>
-                <option value="Yves Saint Laurent">Yves Saint Laurent</option>
-                <option value="Tom Ford">Tom Ford</option>
-                <option value="Creed">Creed</option>
-                <option value="Maison Francis Kurkdjian">Maison Francis Kurkdjian</option>
-              </select>
-              {formErrors.brand && <small className="form-field-error">{formErrors.brand}</small>}
+              />
+
+              <small className="form-hint">
+                Si editás un producto y no elegís una imagen nueva, se conserva
+                la anterior.
+              </small>
             </label>
 
             <label className="form-field">
@@ -272,12 +333,16 @@ export const AdminFormPage = () => {
                 min="0"
                 step="0.01"
                 value={formFields.price}
-                onChange={(event: ChangeEvent<HTMLInputElement>) => handleFieldChange("price", event.target.value)}
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  handleFieldChange("price", event.target.value)
+                }
                 onBlur={() => handleFieldBlur("price")}
                 disabled={formStatus === "submitting"}
                 placeholder="120"
               />
-              {formErrors.price && <small className="form-field-error">{formErrors.price}</small>}
+              {formErrors.price && (
+                <small className="form-field-error">{formErrors.price}</small>
+              )}
             </label>
 
             <label className="form-field">
@@ -287,19 +352,47 @@ export const AdminFormPage = () => {
                 min="0"
                 step="1"
                 value={formFields.stock}
-                onChange={(event: ChangeEvent<HTMLInputElement>) => handleFieldChange("stock", event.target.value)}
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  handleFieldChange("stock", event.target.value)
+                }
                 onBlur={() => handleFieldBlur("stock")}
                 disabled={formStatus === "submitting"}
                 placeholder="15"
               />
-              {formErrors.stock && <small className="form-field-error">{formErrors.stock}</small>}
+              {formErrors.stock && (
+                <small className="form-field-error">{formErrors.stock}</small>
+              )}
+            </label>
+
+            <label className="form-field">
+              <span>Marca</span>
+              <select
+                value={formFields.brand}
+                onChange={(event: ChangeEvent<HTMLSelectElement>) =>
+                  handleFieldChange("brand", event.target.value)
+                }
+                onBlur={() => handleFieldBlur("brand")}
+                disabled={formStatus === "submitting"}
+              >
+                <option value="">Seleccioná una marca</option>
+                {availableBrands.map((brand) => (
+                  <option key={brand} value={brand}>
+                    {brand}
+                  </option>
+                ))}
+              </select>
+              {formErrors.brand && (
+                <small className="form-field-error">{formErrors.brand}</small>
+              )}
             </label>
 
             <label className="form-field">
               <span>Género</span>
               <select
                 value={formFields.gender}
-                onChange={(event: ChangeEvent<HTMLSelectElement>) => handleFieldChange("gender", event.target.value)}
+                onChange={(event: ChangeEvent<HTMLSelectElement>) =>
+                  handleFieldChange("gender", event.target.value)
+                }
                 onBlur={() => handleFieldBlur("gender")}
                 disabled={formStatus === "submitting"}
               >
@@ -308,22 +401,9 @@ export const AdminFormPage = () => {
                 <option value="male">Masculino</option>
                 <option value="unisex">Unisex</option>
               </select>
-              {formErrors.gender && <small className="form-field-error">{formErrors.gender}</small>}
-            </label>
-
-            <label className="form-field">
-              <span>Imagen</span>
-              <input
-                type="url"
-                value={formFields.image}
-                onChange={(event: ChangeEvent<HTMLInputElement>) => handleFieldChange("image", event.target.value)}
-                onBlur={() => handleFieldBlur("image")}
-                disabled={formStatus === "submitting"}
-                placeholder="https://..."
-              />
-              <small className="form-hint">
-                Si editás un producto y no elegís una imagen nueva, se conserva la anterior.
-              </small>
+              {formErrors.gender && (
+                <small className="form-field-error">{formErrors.gender}</small>
+              )}
             </label>
           </div>
 
@@ -332,23 +412,44 @@ export const AdminFormPage = () => {
             <textarea
               rows={4}
               value={formFields.description}
-              onChange={(event: ChangeEvent<HTMLTextAreaElement>) => handleFieldChange("description", event.target.value)}
+              onChange={(event: ChangeEvent<HTMLTextAreaElement>) =>
+                handleFieldChange("description", event.target.value)
+              }
               onBlur={() => handleFieldBlur("description")}
               disabled={formStatus === "submitting"}
               placeholder="Describí el producto para el catálogo"
             />
-            {formErrors.description && <small className="form-field-error">{formErrors.description}</small>}
+            {formErrors.description && (
+              <small className="form-field-error">
+                {formErrors.description}
+              </small>
+            )}
           </label>
 
-          {formFields.image && (
+          {(selectedImageFile || formFields.image) && (
             <div className="image-preview">
-              <img src={formFields.image} alt="Preview del producto" />
+              <img
+                src={
+                  selectedImageFile
+                    ? URL.createObjectURL(selectedImageFile)
+                    : formFields.image
+                }
+                alt="Preview del producto"
+              />
             </div>
           )}
 
           <div className="form-actions">
-            <button type="submit" disabled={formStatus === "submitting"} className="admin-btn admin-btn-primary">
-              {formStatus === "submitting" ? "Guardando..." : selectedProductId ? "Guardar cambios" : "Crear producto"}
+            <button
+              type="submit"
+              disabled={formStatus === "submitting"}
+              className="admin-btn admin-btn-primary"
+            >
+              {formStatus === "submitting"
+                ? "Guardando..."
+                : selectedProductId
+                  ? "Guardar cambios"
+                  : "Crear producto"}
             </button>
           </div>
         </form>
