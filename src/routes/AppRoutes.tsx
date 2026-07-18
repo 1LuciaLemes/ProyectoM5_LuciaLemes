@@ -7,6 +7,7 @@ import { SigninPage } from "../pages/signin/SigninPage";
 import { SignupPage } from "../pages/signup/SignupPage";
 import { AdminPage } from "../pages/admin/AdminPage";
 import { AdminProductsPage } from "../pages/admin/AdminProductsPage";
+import { AdminFormPage } from "../pages/admin/AdminFormPage";
 import { AdminOrdersPage } from "../pages/admin/AdminOrdersPage";
 import { ProtectedRoute } from "./ProtectedRoute";
 
@@ -28,6 +29,8 @@ export const AppRoutes = () => {
                 <Route path="/admin" element={<AdminPage />}>
                     <Route index element={<AdminProductsPage />} />
                     <Route path="products" element={<AdminProductsPage />} />
+                    <Route path="products/form" element={<AdminFormPage />} />
+                    <Route path="products/form/:productId" element={<AdminFormPage />} />
                     <Route path="orders" element={<AdminOrdersPage />} />
                 </Route>
             </Route>

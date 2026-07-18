@@ -9,8 +9,7 @@ export type ProductBrand =
   | "Yves Saint Laurent"
   | "Tom Ford"
   | "Creed"
-  | "Maison Francis Kurkdjian"
-  | "Tous";
+  | "Maison Francis Kurkdjian";
 
 export type Product = {
   id: string;

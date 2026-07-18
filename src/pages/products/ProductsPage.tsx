@@ -1,5 +1,7 @@
 ﻿import { useState } from "react";
 import { ProductList } from "../../components/Products/List/ProductList";
+import { LoadMoreButton } from "../../components/Products/LoadMoreButton";
+import { SearchBar } from "../../components/Products/SearchBar";
 import { LoadingState } from "../../components/State/Loading.State";
 import { ErrorState } from "../../components/State/Error.State";
 import { EmptyState } from "../../components/State/Empty.State";
@@ -40,15 +42,14 @@ export function ProductPage() {
       <h1>ƒragranza</h1>
 
       <section className="product-controls">
-        <div className="product-controls__search">
-          <label htmlFor="product-search">Buscar</label>
-          <input
-            id="product-search"
-            value={searchTerm}
-            onChange={(event) => void handleSearch(event.target.value)}
-            placeholder="Escribe 3 letras para buscar..."
-          />
-        </div>
+        <SearchBar
+          value={searchTerm}
+          onSearch={handleSearch}
+          onReset={() => {
+            setSearchTerm("");
+            void loadFirstPage();
+          }}
+        />
 
         <div className="product-controls__filters">
           <Button
@@ -161,12 +162,12 @@ export function ProductPage() {
         </LoadingState>
       </ErrorState>
 
-      {hasMore && !loading && (
-        <div className="load-more-container">
-          <Button onClick={() => void loadMore()} disabled={loadingMore}>
-            {loadingMore ? "Cargando más..." : "Cargar más"}
-          </Button>
-        </div>
+      {!loading && (
+        <LoadMoreButton
+          hasMore={hasMore}
+          loadingMore={loadingMore}
+          onLoadMore={loadMore}
+        />
       )}
     </main>
   );

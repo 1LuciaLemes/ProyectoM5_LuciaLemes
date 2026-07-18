@@ -2,8 +2,9 @@
  LISTA DE PRODUCTOS
 ====================*/
 .product-list {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 columnas */
+    grid-template-rows: repeat(2, auto);   /* 2 filas */
     gap: 0.5rem;
 }
 
@@ -21,4 +22,38 @@ button {
 
 button:hover {
   background-color: var(--button-hover);
+}
+
+.product-controls__search {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.product-controls__search label {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.product-controls__search-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.product-controls__search input {
+  flex: 1;
+  min-width: 16rem;
+  padding: 0.75rem 0.85rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border-color, #d1d5db);
+  background: var(--background, #fff);
+  color: var(--text-primary);
+}
+
+.product-controls__search button {
+  border: 1px solid var(--border-color, #d1d5db);
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  background: transparent;
+  color: var(--text-primary);
 }

@@ -133,3 +133,13 @@ Implementé que cuando cargo la página de productos, comienza con un límite, y
 
 - Se cargan 10 productos máximo
 
+## 18/07/2026
+
+# 1 Admin CRUD
+
+Implementé los CRUD de admin, donde puedo editar, crear y eliminar producto.
+Generé el bucket, el cual falta implementar.
+
+- Separé el componente "searchBar" para reutilizarlo también en admin así busca por nombre los productos
+- Genero y reutilizo el formulario tanto para editar/crear producto, el form tiene sus propias validaciones
+- Añado la paginación también en los productos mostrados a admin

@@ -5,22 +5,29 @@ import type {
   ProductGender,
 } from "../../contexts/Products/product.type";
 import {
+  addDoc,
   collection,
+  deleteDoc,
   getDocs,
   query,
   where,
   orderBy,
+  serverTimestamp,
   startAfter,
   startAt,
   endAt,
   limit,
   doc,
   getDoc,
+  updateDoc,
+  Timestamp,
   type DocumentSnapshot,
   type QueryConstraint,
 } from "firebase/firestore";
 
 const productsRef = collection(db, "products");
+
+type ProductPayload = Omit<Product, "id" | "createdAt">;
 
 type FetchProductsParams = {
   pageSize?: number;
@@ -115,11 +122,51 @@ export const getProducts = async (): Promise<Product[]> => {
   return result.products;
 };
 
+export const addProduct = async (payload: ProductPayload): Promise<Product> => {
+  const newProduct = {
+    ...payload,
+    nameLower: payload.title.toLowerCase(),
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  };
+
+  const docRef = await addDoc(productsRef, newProduct);
+
+  return {
+    id: docRef.id,
+    ...payload,
+    createdAt: Timestamp.now(),
+  } as Product;
+};
+
+export const updateProduct = async (
+  id: string,
+  payload: ProductPayload,
+): Promise<Product> => {
+  const productRef = doc(productsRef, id);
+
+  await updateDoc(productRef, {
+    ...payload,
+    nameLower: payload.title.toLowerCase(),
+    updatedAt: serverTimestamp(),
+  });
+
+  return {
+    id,
+    ...payload,
+    createdAt: Timestamp.now(),
+  } as Product;
+};
+
+export const deleteProduct = async (id: string): Promise<void> => {
+  await deleteDoc(doc(productsRef, id));
+};
+
 export const getProductById = async (
   id: string,
 ): Promise<Product | null> => {
   try {
-    const productRef = doc(db, "perfumes", id);
+    const productRef = doc(productsRef, id);
 
     const productSnapshot = await getDoc(productRef);
 
