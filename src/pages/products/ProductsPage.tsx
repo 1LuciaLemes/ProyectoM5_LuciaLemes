@@ -1,107 +1,149 @@
-﻿import { ProductList } from "../../components/Products/List/ProductList";
+﻿import { useState } from "react";
+import { ProductList } from "../../components/Products/List/ProductList";
 import { LoadingState } from "../../components/State/Loading.State";
 import { ErrorState } from "../../components/State/Error.State";
 import { EmptyState } from "../../components/State/Empty.State";
-import { getProducts } from "../../services/products/productsService";
-import {
-  getFemaleProducts,
-  getMaleProducts,
-  getUnisexProducts,
-  getProductsByBrand,
-} from "../../services/products/products.filter.service";
-import {
-  sortByHighestPrice,
-  sortByLowestPrice,
-} from "../../utils/productsSort";
 import { Button } from "../../UI/Button";
 import { useProducts } from "../../contexts/Products/useProducts";
-import type { Product } from "../../contexts/Products/product.type";
 import "./ProductsPage.css";
 
 export function ProductPage() {
-  const { products, setProducts, loading, error } = useProducts();
+  const {
+    products,
+    loading,
+    loadingMore,
+    error,
+    hasMore,
+    loadFirstPage,
+    loadMore,
+  } = useProducts();
 
-  const applyProductFilter = (filter: (products: Product[]) => Product[]) => {
-    const filteredProducts = filter(products);
-    setProducts(filteredProducts);
-  };
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const applyAsyncFilter = async (filter: () => Promise<Product[]>) => {
-    const filteredProducts = await filter();
-    setProducts(filteredProducts);
+  const handleSearch = async (value: string) => {
+    setSearchTerm(value);
+
+    const trimmedValue = value.trim();
+
+    if (trimmedValue.length === 0) {
+      await loadFirstPage();
+      return;
+    }
+
+    if (trimmedValue.length >= 2) {
+      await loadFirstPage({ searchTerm: trimmedValue });
+    }
   };
 
   return (
     <main>
       <h1>ƒragranza</h1>
 
-      <div>
-        <Button onClick={() => applyAsyncFilter(getProducts)}>Todos</Button>
-        <Button onClick={() => applyAsyncFilter(getFemaleProducts)}>
-          Femenino
-        </Button>
-        <Button onClick={() => applyAsyncFilter(getMaleProducts)}>
-          Masculino
-        </Button>
-        <Button onClick={() => applyAsyncFilter(getUnisexProducts)}>
-          Unisex
-        </Button>
-        <Button onClick={() => applyProductFilter(sortByHighestPrice)}>
-          Mayor Precio
-        </Button>
-        <Button onClick={() => applyProductFilter(sortByLowestPrice)}>
-          Menor Precio
-        </Button>
-        <Button
-          onClick={() => applyAsyncFilter(() => getProductsByBrand("Dior"))}
-        >
-          Dior
-        </Button>
+      <section className="product-controls">
+        <div className="product-controls__search">
+          <label htmlFor="product-search">Buscar</label>
+          <input
+            id="product-search"
+            value={searchTerm}
+            onChange={(event) => void handleSearch(event.target.value)}
+            placeholder="Escribe 3 letras para buscar..."
+          />
+        </div>
 
-        <Button
-          onClick={() =>
-            applyAsyncFilter(() => getProductsByBrand("Giorgio Armani"))
-          }
-        >
-          Giorgio Armani
-        </Button>
+        <div className="product-controls__filters">
+          <Button
+            onClick={() => {
+              setSearchTerm("");
+              void loadFirstPage();
+            }}
+          >
+            Todos
+          </Button>
+          <Button
+            onClick={() => {
+              setSearchTerm("");
+              void loadFirstPage({ genderFilter: "female" });
+            }}
+          >
+            Femenino
+          </Button>
+          <Button
+            onClick={() => {
+              setSearchTerm("");
+              void loadFirstPage({ genderFilter: "male" });
+            }}
+          >
+            Masculino
+          </Button>
+          <Button
+            onClick={() => {
+              setSearchTerm("");
+              void loadFirstPage({ genderFilter: "unisex" });
+            }}
+          >
+            Unisex
+          </Button>
+        </div>
 
-        <Button
-          onClick={() => applyAsyncFilter(() => getProductsByBrand("Chanel"))}
-        >
-          Chanel
-        </Button>
-
-        <Button
-          onClick={() =>
-            applyAsyncFilter(() => getProductsByBrand("Yves Saint Laurent"))
-          }
-        >
-          Yves Saint Laurent
-        </Button>
-
-        <Button
-          onClick={() => applyAsyncFilter(() => getProductsByBrand("Tom Ford"))}
-        >
-          Tom Ford
-        </Button>
-
-        <Button
-          onClick={() => applyAsyncFilter(() => getProductsByBrand("Creed"))}
-        >
-          Creed
-        </Button>
-
-        <Button
-          onClick={() =>
-            applyAsyncFilter(() =>
-              getProductsByBrand("Maison Francis Kurkdjian"),
-            )
-          }
-        >
-          Maison Francis Kurkdjian
-        </Button>
-      </div>
+        <div className="product-controls__filters">
+          <Button
+            onClick={() => {
+              setSearchTerm("");
+              void loadFirstPage({ brandFilter: "Dior" });
+            }}
+          >
+            Dior
+          </Button>
+          <Button
+            onClick={() => {
+              setSearchTerm("");
+              void loadFirstPage({ brandFilter: "Giorgio Armani" });
+            }}
+          >
+            Giorgio Armani
+          </Button>
+          <Button
+            onClick={() => {
+              setSearchTerm("");
+              void loadFirstPage({ brandFilter: "Chanel" });
+            }}
+          >
+            Chanel
+          </Button>
+          <Button
+            onClick={() => {
+              setSearchTerm("");
+              void loadFirstPage({ brandFilter: "Yves Saint Laurent" });
+            }}
+          >
+            Yves Saint Laurent
+          </Button>
+          <Button
+            onClick={() => {
+              setSearchTerm("");
+              void loadFirstPage({ brandFilter: "Tom Ford" });
+            }}
+          >
+            Tom Ford
+          </Button>
+          <Button
+            onClick={() => {
+              setSearchTerm("");
+              void loadFirstPage({ brandFilter: "Creed" });
+            }}
+          >
+            Creed
+          </Button>
+          <Button
+            onClick={() => {
+              setSearchTerm("");
+              void loadFirstPage({ brandFilter: "Maison Francis Kurkdjian" });
+            }}
+          >
+            Maison Francis Kurkdjian
+          </Button>
+        </div>
+      </section>
 
       <ErrorState
         id="products"
@@ -118,6 +160,14 @@ export function ProductPage() {
           </EmptyState>
         </LoadingState>
       </ErrorState>
+
+      {hasMore && !loading && (
+        <div className="load-more-container">
+          <Button onClick={() => void loadMore()} disabled={loadingMore}>
+            {loadingMore ? "Cargando más..." : "Cargar más"}
+          </Button>
+        </div>
+      )}
     </main>
   );
 }

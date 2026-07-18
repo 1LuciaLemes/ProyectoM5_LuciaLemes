@@ -125,7 +125,11 @@ Agregué ProtectedRoute para diferenciar el logueo entre usuarios y admin.
 - Se diferencia entre rol admin/customer, cada cual ve las rutas que debe
 - Se añadió formulario para iniciar sesión/registrarse 
 - Añadi el componente (btn) para cerrar sesión
+- Páginas de admin, /admin/products, /admin/orders
 
 # 3 Paginacion
 
 Implementé que cuando cargo la página de productos, comienza con un límite, y existe un botón (Cargar más) que carga más productos y mantiene un snapshot de los anteriores, por lo que no se pierden y se muestran los nuevos y los anteriores.
+
+- Se cargan 10 productos máximo
+
