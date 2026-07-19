@@ -143,3 +143,18 @@ Generé el bucket, el cual falta implementar.
 - Separé el componente "searchBar" para reutilizarlo también en admin así busca por nombre los productos
 - Genero y reutilizo el formulario tanto para editar/crear producto, el form tiene sus propias validaciones
 - Añado la paginación también en los productos mostrados a admin
+
+# 2 Conexión Front - BFF - AWS
+
+1. El administrador selecciona una imagen en el formulario.
+2. El frontend envía una solicitud a la Serverless Function (/api/presign).
+3. La Serverless Function genera una URL prefirmada utilizando las credenciales de AWS.
+4. El frontend realiza un PUT directo al bucket S3 usando esa URL.
+5. AWS almacena la imagen y esta queda accesible mediante una URL pública.
+6. El frontend crea el producto en Firestore guardando esa URL pública en el campo `image`.
+
+# 3 Gestión de órdenes
+
+Añadí el CRUD de órdenes, donde se crean, y se muestran.
+- Un usuario puede ver sólo sus órdenes
+- Admin puede ver todas las órdenes
