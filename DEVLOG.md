@@ -159,8 +159,19 @@ Añadí el CRUD de órdenes, donde se crean, y se muestran.
 - Un usuario puede ver sólo sus órdenes
 - Admin puede ver todas las órdenes
 
-## 18/07/2026
+## 19/07/2026
 
 # 1 Corrección de carrito
 
 Acomodé el carrito para que diferenciara por usuarios, porque no estaba diferenciando los items añadidos al carrito.
+
+# 2 Tests
+
+Lo que hice relativo a test fue:
+- Configurar para poder ejecutar los tests, creé un smoke test para verificar que la configuración sea correcta.
+- Fixtures: usuarios (admin/customer), carrito, producto, snapshot de orden, orden
+- renderWhitProviders: testeo que los providers se aplican de forma correcta, ahora los testeo directo en el smoke
+- cartReducer: testear las funciones puras(no se comunican con el exterior): additem, removeitem, clearcart, cantidades (total y totalitems)
+- useCart: verifico que useCart exponga correctamente el contexto y sus acciones
+- mswServer: configuré mocks de respuestas para simular llamadas HTTP. Mockeo el flujo hacia la API de /presign para probar la comunicación entre frontend, BFF y AWS sin depender de servicios externos
+- checkoutFlow: Testeo el ordersService, mockeo los datos así no tengo que hacer llamados a firebase, y testeo algunas funcionalidades básicas: createOrder, createOrderFromCartItems, getOrders, getUserOrders 
