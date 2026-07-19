@@ -6,20 +6,23 @@ export type CartItem = Product & {
 };
 
 export type CartState = {
-  items: CartItem[];
+  itemsByUser: Record<string, CartItem[]>;
 };
 
 export type CartAction =
-  | { 
-    type: "ADD_ITEM"; 
-    payload: Product 
+  | {
+      type: "ADD_ITEM";
+      userId: string;
+      payload: Product;
     }
-  | { 
-    type: "REMOVE_ITEM"; 
-    payload: string 
+  | {
+      type: "REMOVE_ITEM";
+      userId: string;
+      payload: string;
     }
-  | { 
-    type: "CLEAR_CART" 
+  | {
+      type: "CLEAR_CART";
+      userId: string;
     };
 
 export type CartContextType = {

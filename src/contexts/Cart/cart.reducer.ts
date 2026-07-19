@@ -1,57 +1,67 @@
-import type { CartAction, CartState } from "./CartContext.type";
+import type { CartAction, CartState, CartItem } from "./CartContext.type";
 
 export const initialState: CartState = {
-    items: [],
+  itemsByUser: {},
+};
+
+function getUserItems(state: CartState, userId: string): CartItem[] {
+  return state.itemsByUser[userId] ?? [];
 }
 
 export function CartReducer(
-    state: CartState,
-    action: CartAction, 
+  state: CartState,
+  action: CartAction,
 ): CartState {
-    switch (action.type) {
-        case "ADD_ITEM": {
-            const existingItem = state.items.find(
-                (item) => item.id === action.payload.id,
-            );
+  switch (action.type) {
+    case "ADD_ITEM": {
+      const userItems = getUserItems(state, action.userId);
+      const existingItem = userItems.find((item) => item.id === action.payload.id);
 
-            if (existingItem) {
-                return {
-                    ...state,
-                    items: state.items.map((item) =>
-                        item.id === action.payload.id
-                            ? { ...item, quantity: item.quantity + 1 }
-                            : item,
-                    ),
-                };
-            }
+      const nextItems = existingItem
+        ? userItems.map((item) =>
+            item.id === action.payload.id
+              ? { ...item, quantity: item.quantity + 1 }
+              : item,
+          )
+        : [
+            ...userItems,
+            {
+              ...action.payload,
+              quantity: 1,
+            },
+          ];
 
-            return {
-                ...state,
-                items: [
-                    ...state.items,
-                    {
-                        ...action.payload,
-                        quantity: 1,
-                    },
-                ],
-            };
-        }
-
-        case "REMOVE_ITEM":
-            return {
-                ...state,
-                items: state.items.filter(
-                    (item) => item.id !== action.payload,
-                ),
-            };
-
-        case "CLEAR_CART":
-            return {
-                ...state,
-                items: [],
-            };
-            
-        default:
-            return state;
+      return {
+        ...state,
+        itemsByUser: {
+          ...state.itemsByUser,
+          [action.userId]: nextItems,
+        },
+      };
     }
+
+    case "REMOVE_ITEM": {
+      const userItems = getUserItems(state, action.userId);
+
+      return {
+        ...state,
+        itemsByUser: {
+          ...state.itemsByUser,
+          [action.userId]: userItems.filter((item) => item.id !== action.payload),
+        },
+      };
+    }
+
+    case "CLEAR_CART":
+      return {
+        ...state,
+        itemsByUser: {
+          ...state.itemsByUser,
+          [action.userId]: [],
+        },
+      };
+
+    default:
+      return state;
+  }
 }

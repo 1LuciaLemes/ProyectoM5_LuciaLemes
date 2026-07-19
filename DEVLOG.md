@@ -158,3 +158,9 @@ Generé el bucket, el cual falta implementar.
 Añadí el CRUD de órdenes, donde se crean, y se muestran.
 - Un usuario puede ver sólo sus órdenes
 - Admin puede ver todas las órdenes
+
+## 18/07/2026
+
+# 1 Corrección de carrito
+
+Acomodé el carrito para que diferenciara por usuarios, porque no estaba diferenciando los items añadidos al carrito.
