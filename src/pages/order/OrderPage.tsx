@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/auth/useAuth";
 import { OrderService } from "../../services/orders/orders.service";
 import type { Order } from "../../types/order.types";
+import "./OrderPage.css"
 
 export const OrderPage = () => {
   const { user } = useAuth();
@@ -42,45 +43,79 @@ export const OrderPage = () => {
 
   const renderOrders = () => {
     if (!user) {
-      return <p>Debes iniciar sesión para ver tus compras.</p>;
+      return (
+        <p className="orders-message">
+          Debes iniciar sesión para ver tus compras.
+        </p>
+      );
     }
 
     if (orders.length === 0) {
-      return <p>No tienes ordenes registradas todavía.</p>;
+      return (
+        <p className="orders-message">No tienes ordenes registradas todavía.</p>
+      );
     }
 
     return (
-      <ul>
+      <section className="orders-list">
         {orders.map((order) => (
-          <li key={order.id}>
-            <article>
-              <h2>Orden {order.id}</h2>
-              <p>Estado: {order.status}</p>
-              <p>Total: US${order.total.toFixed(2)}</p>
-              <p>{formatOrderSummary(order.items)}</p>
-              <ul>
+          <article className="order-card" key={order.id}>
+            <div className="order-header">
+              <div className="order-title">
+                <h3>Orden #{order.id}</h3>
+
+                <span className={`order-status ${order.status}`}>
+                  {order.status}
+                </span>
+              </div>
+
+              <div className="order-total">Total: US${order.total.toFixed(2)}</div>
+            </div>
+
+            <div className="order-summary">
+              <strong>Resumen:</strong> {formatOrderSummary(order.items)}
+            </div>
+
+            <div className="order-products">
+              <h3>Productos</h3>
+
+              <div className="order-product-list">
                 {order.items.map((item) => (
-                  <li key={item.productId}>
-                    {item.title} x{item.quantity} - US${item.priceAtPurchase.toFixed(2)}
-                  </li>
+                  <div className="order-product" key={item.productId}>
+                    <div className="order-product-info">
+                      <span className="order-product-title">{item.title}</span>
+
+                      <span className="order-product-quantity">
+                        Cantidad: {item.quantity}
+                      </span>
+                    </div>
+
+                    <span className="order-product-price">
+                      US${item.priceAtPurchase.toFixed(2)}
+                    </span>
+                  </div>
                 ))}
-              </ul>
-            </article>
-            <hr />
-          </li>
+              </div>
+            </div>
+          </article>
         ))}
-      </ul>
+      </section>
     );
   };
 
   return (
-    <main>
-      <h1>Mis compras</h1>
-      {loading ? <p>Cargando compras...</p> : null}
-      {error ? <p>{error}</p> : null}
-      {!loading ? renderOrders() : null}
+    <main className="orders-page">
+      <header>
+        <h1>Mis compras</h1>
+
+        <p>Historial de pedidos realizados.</p>
+      </header>
+
+      {loading && <p className="orders-message">Cargando compras...</p>}
+
+      {error && <p className="orders-error">{error}</p>}
+
+      {!loading && renderOrders()}
     </main>
   );
 };
-
-

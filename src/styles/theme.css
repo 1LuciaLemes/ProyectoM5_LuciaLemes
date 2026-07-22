@@ -1,35 +1,58 @@
 :root {
-  /* Tema claro */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f3f4f6;
+  /* =========================
+     TEMA CLARO
+     ========================= */
 
-  --text-primary: #111827;
-  --text-secondary: #6b7280;
+  /* Fondos */
+  --bg-primary: #fbfbf9;
+  --bg-secondary: #E5E2CF;
+  --bg-red: #e05858;
+  --color-white: white;
 
-  --border-color: #e5e7eb;
+  /* Texto */
+  --text-primary: #303B32;
+  --text-secondary: #6C756B;
 
-  --button-bg: #2563eb;
-  --button-text: #ffffff;
-  --button-hover: #1d4ed8;
+  /* Bordes */
+  --border-color: #C8C9B7;
 
-  --card-bg: #ffffff;
-  --shadow-color: rgba(0, 0, 0, 0.1);
+  /* Botones */
+  --button-bg: #68775F;
+  --button-text: #F7F5EC;
+  --button-hover: #526249;
+
+  /* Cards */
+  --card-bg: #FFFFFF;
+
+  /* Sombras */
+  --shadow-color: rgba(48, 59, 50, 0.16);
 }
 
-/* Tema oscuro */
+
 .dark {
-  --bg-primary: #111827;
-  --bg-secondary: #1f2937;
+  /* =========================
+     TEMA OSCURO
+     ========================= */
 
-  --text-primary: #f9fafb;
-  --text-secondary: #9ca3af;
+  /* Fondos */
+  --bg-primary: #1E2520;
+  --bg-secondary: #2B342C;
 
-  --border-color: #374151;
+  /* Texto */
+  --text-primary: #F7F5EC;
+  --text-secondary: #B9BDAF;
 
-  --button-bg: #60a5fa;
-  --button-text: #111827;
-  --button-hover: #93c5fd;
+  /* Bordes */
+  --border-color: #4E594D;
 
-  --card-bg: #1f2937;
+  /* Botones */
+  --button-bg: #8E9B7E;
+  --button-text: #1E2520;
+  --button-hover: #AAB59B;
+
+  /* Cards */
+  --card-bg: #354036;
+
+  /* Sombras */
   --shadow-color: rgba(0, 0, 0, 0.5);
 }

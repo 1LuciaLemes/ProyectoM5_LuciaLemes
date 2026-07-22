@@ -20,6 +20,7 @@ import type {
   OrderItemSnapshot,
   OrderStatus,
 } from "../../types/order.types";
+import { decreaseStock } from "../products/productsService";
 
 const ordersRef = collection(db, "orders");
 
@@ -77,8 +78,20 @@ const createOrderFromCartItems = async (
   cartItems: CartItem[],
   total: number,
 ): Promise<Order> => {
+
   const items = createOrderItemsSnapshot(cartItems);
-  return createOrder({ userId, items, total });
+
+  const order = await createOrder({
+    userId,
+    items,
+    total,
+  });
+
+  for (const item of cartItems) {
+    await decreaseStock(item.id, item.quantity);
+  }
+
+  return order;
 };
 
 const getOrders = async (): Promise<Order[]> => {

@@ -175,3 +175,21 @@ Lo que hice relativo a test fue:
 - useCart: verifico que useCart exponga correctamente el contexto y sus acciones
 - mswServer: configuré mocks de respuestas para simular llamadas HTTP. Mockeo el flujo hacia la API de /presign para probar la comunicación entre frontend, BFF y AWS sin depender de servicios externos
 - checkoutFlow: Testeo el ordersService, mockeo los datos así no tengo que hacer llamados a firebase, y testeo algunas funcionalidades básicas: createOrder, createOrderFromCartItems, getOrders, getUserOrders 
+
+## 20/07/2026 - 21/07/2026
+
+# 1 Agregado de estilos, y trabajo visual sobre la App.
+
+Implementaciones funcionales y de lógica:
+- Contexto de Favoritos, ahora hay un corazón que se le aplica un Toggle para poder añadir o no a favoritos
+- Servicio para el carrito, para que permanezca en la base de datos la información de cada carrito por usuario
+- Reducción del stock en base de datos, se puede visualizar en el carrito, el stock disminuye una vez hecha la orden (aunque aparezca como pendiente todavia)
+- Las ordenes se pueden modificar de sus estados, pendiente, procesando, completa, cancelada, actualizando automáticamente la base de datos
+
+Implementaciones visuales:
+- Layout genérico en la página de productos, visto como un catálogo
+- Modal que notifica cuando se quiere añadir al carrito un producto y no se está logueado
+- Mejora visual en el carrito de compras, ordersPage, tanto para admin como para user
+- Mejora visual en la distribución de los links de navegación entre páginas
+- Footer con nombre
+

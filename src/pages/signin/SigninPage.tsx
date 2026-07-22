@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { AuthForm } from "../../components/Auth/AuthForm";
 import { useAuth } from "../../contexts/auth/useAuth";
 
@@ -26,9 +26,12 @@ export const SigninPage = () => {
         submitLabel="Entrar"
         onSubmit={handleSubmit}
         footer={
+          <>
           <button type="button" onClick={handleGoogle} style={{ marginTop: "1rem" }}>
             Iniciar con Google
           </button>
+          <Link to="/signup">Registrarse</Link>
+          </>
         }
       />
     </main>

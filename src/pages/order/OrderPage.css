@@ -1,0 +1,273 @@
+.orders-page {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.orders-page header {
+  margin-bottom: 1rem;
+}
+
+.orders-page h1 {
+  color: var(--text-primary);
+  margin-bottom: .4rem;
+}
+
+.orders-page p {
+  color: var(--text-secondary);
+}
+
+
+/* =================
+   LISTA DE ORDENES
+================= */
+
+.orders-list {
+  text-align: left;
+
+  display: grid;
+
+  gap: 1rem;
+}
+
+
+.order-card {
+
+  display: grid;
+
+  gap: 1rem;
+
+  padding: 1.2rem;
+
+  background: var(--card-bg);
+
+  border: 1px solid var(--border-color);
+
+  border-radius: 1rem;
+
+  box-shadow: 0 5px 12px var(--shadow-color);
+}
+
+
+/* =================
+   HEADER
+================= */
+
+.order-header {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  gap: .75rem;
+
+  padding-bottom: .8rem;
+
+  border-bottom: 1px solid var(--border-color);
+}
+
+
+.order-title {
+
+  display: grid;
+
+  gap: .35rem;
+
+  justify-items: start;
+}
+
+
+.order-title h2 {
+
+  margin: 0;
+
+  color: var(--text-primary);
+
+  font-size: 1.1rem;
+}
+
+
+.order-total {
+
+  font-size: 1.2rem;
+
+  font-weight: 700;
+
+  color: var(--button-bg);
+}
+
+
+/* =================
+   ESTADO
+================= */
+
+.order-status {
+
+  width: fit-content;
+
+  padding: .35rem .7rem;
+
+  border-radius: .5rem;
+
+  background: var(--bg-secondary);
+
+  color: var(--text-primary);
+
+  font-weight: 600;
+
+  font-size: .9rem;
+}
+
+
+/* =================
+   RESUMEN
+================= */
+
+.order-summary {
+
+  padding: .7rem .8rem;
+
+  background: var(--bg-primary);
+
+  border: 1px solid var(--border-color);
+
+  border-radius: .65rem;
+
+  color: var(--text-secondary);
+
+  font-size: .95rem;
+}
+
+
+.order-summary strong {
+
+  color: var(--text-primary);
+
+}
+
+
+/* =================
+   PRODUCTOS
+================= */
+
+.order-products h3 {
+
+  margin: 0 0 .5rem;
+
+  color: var(--text-primary);
+
+  font-size: 1rem;
+}
+
+
+.order-product-list {
+
+  display: grid;
+
+  gap: .5rem;
+}
+
+
+.order-product {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: .75rem;
+
+  padding: .7rem .8rem;
+
+  border-radius: .65rem;
+
+  border: 1px solid var(--border-color);
+
+  background: var(--bg-primary);
+}
+
+
+.order-product-info {
+
+  display: grid;
+
+  gap: .1rem;
+}
+
+
+.order-product-title {
+
+  color: var(--text-primary);
+
+  font-weight: 600;
+}
+
+
+.order-product-quantity {
+
+  color: var(--text-secondary);
+
+  font-size: .85rem;
+}
+
+
+.order-product-price {
+
+  color: var(--text-primary);
+
+  font-weight: 700;
+
+  font-size: .95rem;
+}
+
+
+/* =================
+   MENSAJES
+================= */
+
+.orders-message,
+.orders-error {
+
+  padding: .8rem;
+
+  border-radius: .65rem;
+
+  background: var(--card-bg);
+
+  border: 1px solid var(--border-color);
+
+  color: var(--text-primary);
+}
+
+
+/* =================
+   RESPONSIVE
+================= */
+
+@media(max-width:768px){
+
+  .order-header {
+
+    flex-direction: column;
+
+  }
+
+
+  .order-product {
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+  }
+
+
+  .order-product-price {
+
+    align-self: flex-end;
+
+  }
+
+}

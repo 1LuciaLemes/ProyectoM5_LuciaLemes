@@ -23,6 +23,7 @@ import {
   Timestamp,
   type DocumentSnapshot,
   type QueryConstraint,
+  increment,
 } from "firebase/firestore";
 
 const productsRef = collection(db, "products");
@@ -182,4 +183,28 @@ export const getProductById = async (
     console.error("Error obteniendo producto:", error);
     throw error;
   }
+};
+
+export const decreaseStock = async (
+  productId: string,
+  quantity: number,
+): Promise<void> => {
+  const productRef = doc(productsRef, productId);
+
+  await updateDoc(productRef, {
+    stock: increment(-quantity),
+    updatedAt: serverTimestamp(),
+  });
+};
+
+export const increaseStock = async (
+  productId: string,
+  quantity: number,
+): Promise<void> => {
+  const productRef = doc(productsRef, productId);
+
+  await updateDoc(productRef, {
+    stock: increment(quantity),
+    updatedAt: serverTimestamp(),
+  });
 };

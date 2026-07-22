@@ -62,7 +62,7 @@ export const AdminProductsPage = () => {
             setSearchTerm("");
             void loadFirstPage();
           }}
-          placeholder="Escribe 3 letras para buscar..."
+          placeholder="Buscar por nombre..."
           className="admin-search-input"
         />
       </section>
@@ -85,10 +85,10 @@ export const AdminProductsPage = () => {
                 </p>
               </div>
               <div className="admin-list-actions">
-                <Link to={`/admin/products/form/${product.id}`} className="admin-btn admin-btn-secondary">
+                <Link to={`/admin/products/form/${product.id}`} className="admin-btn-secondary">
                   Editar
                 </Link>
-                <button type="button" onClick={() => handleDelete(product.id)} className="admin-btn danger">
+                <button onClick={() => handleDelete(product.id)} className="admin-btn-secondary">
                   Eliminar
                 </button>
               </div>

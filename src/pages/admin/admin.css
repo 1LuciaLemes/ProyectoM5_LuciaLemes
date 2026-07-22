@@ -11,6 +11,80 @@
   align-items: flex-start;
 }
 
+.admin-nav{
+  text-align: left;
+  display: flex;
+  gap: 2rem;
+}
+
+.admin-nav a {
+  position: relative;
+
+  padding: 0.5rem 0;
+
+  color: var(--text-secondary);
+
+  text-decoration: none;
+
+  font-weight: 600;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+/*==================
+ HOVER
+====================*/
+
+.admin-nav a:hover {
+  color: var(--text-primary);
+
+  transform: translateY(-1px);
+}
+
+
+/*==================
+ LINK ACTIVO
+====================*/
+
+.admin-nav a.active {
+  color: var(--text-primary);
+}
+
+
+/* Línea debajo del link activo */
+
+.admin-nav a.active::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 2px;
+
+  border-radius: 999px;
+
+  background-color: currentColor;
+}
+
+
+/*==================
+ FOCUS
+====================*/
+
+.admin-nav a:focus-visible {
+  outline: 2px solid var(--text-primary);
+
+  outline-offset: 4px;
+
+  border-radius: 0.25rem;
+}
+
 .admin-page-title {
   margin: 0;
   font-size: 2rem;
@@ -51,9 +125,7 @@
 .admin-search-input {
   flex: 1;
   min-width: 16rem;
-  padding: 0.75rem 0.85rem;
   border-radius: 0.75rem;
-  border: 1px solid var(--border-color, #d1d5db);
   background: var(--background, #fff);
   color: var(--text-primary);
 }
@@ -67,7 +139,7 @@
 
 .admin-btn {
   border: none;
-  border-radius: 999px;
+  border-radius: 15px;
   padding: 0.7rem 1rem;
   cursor: pointer;
   text-decoration: none;
@@ -77,13 +149,20 @@
 }
 
 .admin-btn-primary {
-  background: var(--accent-color, #2563eb);
-  color: white;
+  background: var(--text-secondary);
+  color: var(--bg-primary);
+  font-weight: 600;
+}
+
+.admin-btn-primary:hover {
+  background: var(--text-primary);
+  color: var(--bg-secondary);
+  font-weight: 600;
 }
 
 .admin-btn-secondary {
-  background: transparent;
-  border: 1px solid var(--border-color, #d1d5db);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
   color: var(--text-primary);
 }
 
@@ -151,18 +230,19 @@
 
 .admin-list-actions button,
 .admin-list-actions a {
-  border-radius: 999px;
-  border: 1px solid var(--border-color, #d1d5db);
-  padding: 0.6rem 0.95rem;
-  background: transparent;
-  color: var(--text-primary);
+  background: var(--text-secondary);
+  color: var(--bg-primary);
+  border-radius: 13px;
+  border: 1px solid var(--bg-secondary);
+  padding: 0.2rem 0.95rem;
   cursor: pointer;
   text-decoration: none;
 }
 
-.admin-list-actions .danger {
-  color: #b91c1c;
-  border-color: #fecaca;
+.admin-list-actions button:hover,
+.admin-list-actions a:hover {
+  background: var(--text-primary);
+  border: 1px solid var(--bg-primary);
 }
 
 .form-grid {

@@ -8,14 +8,22 @@ function getUserItems(state: CartState, userId: string): CartItem[] {
   return state.itemsByUser[userId] ?? [];
 }
 
-export function CartReducer(
-  state: CartState,
-  action: CartAction,
-): CartState {
+export function CartReducer(state: CartState, action: CartAction): CartState {
   switch (action.type) {
+    case "LOAD_CART":
+      return {
+        ...state,
+        itemsByUser: {
+          ...state.itemsByUser,
+          [action.userId]: action.payload,
+        },
+      };
+
     case "ADD_ITEM": {
       const userItems = getUserItems(state, action.userId);
-      const existingItem = userItems.find((item) => item.id === action.payload.id);
+      const existingItem = userItems.find(
+        (item) => item.id === action.payload.id,
+      );
 
       const nextItems = existingItem
         ? userItems.map((item) =>
@@ -47,7 +55,9 @@ export function CartReducer(
         ...state,
         itemsByUser: {
           ...state.itemsByUser,
-          [action.userId]: userItems.filter((item) => item.id !== action.payload),
+          [action.userId]: userItems.filter(
+            (item) => item.id !== action.payload,
+          ),
         },
       };
     }

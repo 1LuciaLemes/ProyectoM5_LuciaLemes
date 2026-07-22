@@ -4,6 +4,16 @@ import { describe, expect, test } from "vitest";
 import { useCart } from "@/contexts/Cart/useCart";
 import { productFixture } from "./fixtures";
 import { renderWithProvider } from "./renderWithProvider";
+import { vi } from "vitest";
+
+vi.mock("@/services/cart/cart.service", () => ({
+  CartService: {
+    addToCart: vi.fn().mockResolvedValue(undefined),
+    updateCartItems: vi.fn().mockResolvedValue(undefined),
+    deleteCart: vi.fn().mockResolvedValue(undefined),
+    getCart: vi.fn().mockResolvedValue([]),
+  },
+}));
 
 function CartConsumer() {
   const { items, totalItems, total, addItem, removeItem } = useCart();

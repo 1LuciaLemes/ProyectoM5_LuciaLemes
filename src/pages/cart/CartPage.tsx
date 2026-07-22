@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useCart } from "../../contexts/Cart/useCart";
 import { Button } from "../../UI/Button";
 import { OrderService } from "../../services/orders/orders.service";
@@ -38,7 +38,6 @@ export function CartPage() {
       >
         <>
           <h1>Mi carrito</h1>
-          <Link to="/orders">Ir a mis compras</Link>
           <section className="cart-header">
             <p>
               Artículos: <strong>{totalItems}</strong>
@@ -65,9 +64,27 @@ export function CartPage() {
 
                     <div className="cart-item-info">
                       <h2>{item.title}</h2>
-                      <p>{item.brand}</p>
-                      <span>Precio: US${item.price.toFixed(2)}</span>
-                      <span>Cantidad: {item.quantity}</span>
+
+                      <p className="cart-item-description">
+                        {item.description}
+                      </p>
+                    </div>
+
+                    <div className="cart-item-details">
+                      <span>
+                        Precio:
+                        <strong>US${item.price.toFixed(2)}</strong>
+                      </span>
+
+                      <span>
+                        Cantidad:
+                        <strong>{item.quantity}</strong>
+                      </span>
+
+                      <span>
+                        Stock:
+                        <strong>{item.stock}</strong>
+                      </span>
                     </div>
 
                     <div className="cart-item-actions">
@@ -83,7 +100,10 @@ export function CartPage() {
               </ul>
 
               <div className="cart-actions">
-                <Button onClick={handleCreateOrderCart} className="cart-clear-btn">
+                <Button
+                  onClick={handleCreateOrderCart}
+                  className="cart-clear-btn"
+                >
                   Comprar
                 </Button>
                 <Button onClick={clearCart} className="cart-clear-btn">

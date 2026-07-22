@@ -1,13 +1,13 @@
-import { Link, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 
 export const AdminPage = () => {
   return (
     <main>
       <header>
-        <nav>
-          <Link to="/admin/products">Productos</Link>
-          <br />
-          <Link to="/admin/orders">Órdenes</Link>
+        <nav className="admin-nav">
+          <NavLink to="/admin/products">Productos</NavLink>
+
+          <NavLink to="/admin/orders">Órdenes</NavLink>
         </nav>
       </header>
 

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Moon, Sun } from "lucide-react";
 
 export function ThemeButton() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -22,7 +23,7 @@ export function ThemeButton() {
 
   return (
     <button onClick={toggleTheme}>
-      {darkMode ? "☀️ Modo claro" : "🌙 Modo oscuro"}
+      {darkMode ? <Moon size={20}/> : <Sun size={20}/>}
     </button>
   );
 }

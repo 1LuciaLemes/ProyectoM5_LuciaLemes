@@ -11,7 +11,7 @@ type SearchBarProps = {
 export const SearchBar = ({
   value,
   onSearch,
-  placeholder = "Escribe 3 letras para buscar...",
+  placeholder = "Buscar por nombre...",
   className = "",
 }: SearchBarProps) => {
   const [localValue, setLocalValue] = useState(value);
@@ -23,7 +23,6 @@ export const SearchBar = ({
 
   return (
     <div className={`product-controls__search ${className}`.trim()}>
-      <label htmlFor="product-search">Buscar</label>
       <div className="product-controls__search-row">
         <input
           id="product-search"

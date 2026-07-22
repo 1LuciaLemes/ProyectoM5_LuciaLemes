@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { ProductList } from "../../components/Products/List/ProductList";
 import { LoadMoreButton } from "../../components/Products/LoadMoreButton";
 import { SearchBar } from "../../components/Products/SearchBar";
@@ -38,137 +38,165 @@ export function ProductPage() {
   };
 
   return (
-    <main>
-      <h1>ƒragranza</h1>
+    <main className="product-page">
+      <div className="product-page__content">
+        <section className="product-controls">
+          <div className="product-controls__filters">
+            <Button
+              className="button-filter"
+              onClick={() => {
+                setSearchTerm("");
+                void loadFirstPage();
+              }}
+            >
+              Todos
+            </Button>
 
-      <section className="product-controls">
-        <SearchBar
-          value={searchTerm}
-          onSearch={handleSearch}
-          onReset={() => {
-            setSearchTerm("");
-            void loadFirstPage();
-          }}
-        />
+            <Button
+              className="button-filter"
+              onClick={() => {
+                setSearchTerm("");
+                void loadFirstPage({ genderFilter: "female" });
+              }}
+            >
+              Femenino
+            </Button>
 
-        <div className="product-controls__filters">
-          <Button
-            onClick={() => {
+            <Button
+              className="button-filter"
+              onClick={() => {
+                setSearchTerm("");
+                void loadFirstPage({ genderFilter: "male" });
+              }}
+            >
+              Masculino
+            </Button>
+
+            <Button
+              className="button-filter"
+              onClick={() => {
+                setSearchTerm("");
+                void loadFirstPage({ genderFilter: "unisex" });
+              }}
+            >
+              Unisex
+            </Button>
+          </div>
+
+          <details className="brands-dropdown">
+            <summary>
+              <span className="brands-title">Marcas</span>
+            </summary>
+
+            <div className="brands-options">
+              <Button
+                className="button-filter"
+                onClick={() => {
+                  setSearchTerm("");
+                  void loadFirstPage({ brandFilter: "Dior" });
+                }}
+              >
+                Dior
+              </Button>
+
+              <Button
+                className="button-filter"
+                onClick={() => {
+                  setSearchTerm("");
+                  void loadFirstPage({ brandFilter: "Giorgio Armani" });
+                }}
+              >
+                Giorgio Armani
+              </Button>
+
+              <Button
+                className="button-filter"
+                onClick={() => {
+                  setSearchTerm("");
+                  void loadFirstPage({ brandFilter: "Chanel" });
+                }}
+              >
+                Chanel
+              </Button>
+
+              <Button
+                className="button-filter"
+                onClick={() => {
+                  setSearchTerm("");
+                  void loadFirstPage({ brandFilter: "Yves Saint Laurent" });
+                }}
+              >
+                Yves Saint Laurent
+              </Button>
+
+              <Button
+                className="button-filter"
+                onClick={() => {
+                  setSearchTerm("");
+                  void loadFirstPage({ brandFilter: "Tom Ford" });
+                }}
+              >
+                Tom Ford
+              </Button>
+
+              <Button
+                className="button-filter"
+                onClick={() => {
+                  setSearchTerm("");
+                  void loadFirstPage({ brandFilter: "Creed" });
+                }}
+              >
+                Creed
+              </Button>
+
+              <Button
+                className="button-filter"
+                onClick={() => {
+                  setSearchTerm("");
+                  void loadFirstPage({
+                    brandFilter: "Maison Francis Kurkdjian",
+                  });
+                }}
+              >
+                Maison Francis Kurkdjian
+              </Button>
+            </div>
+          </details>
+
+          <SearchBar
+            value={searchTerm}
+            onSearch={handleSearch}
+            onReset={() => {
               setSearchTerm("");
               void loadFirstPage();
             }}
-          >
-            Todos
-          </Button>
-          <Button
-            onClick={() => {
-              setSearchTerm("");
-              void loadFirstPage({ genderFilter: "female" });
-            }}
-          >
-            Femenino
-          </Button>
-          <Button
-            onClick={() => {
-              setSearchTerm("");
-              void loadFirstPage({ genderFilter: "male" });
-            }}
-          >
-            Masculino
-          </Button>
-          <Button
-            onClick={() => {
-              setSearchTerm("");
-              void loadFirstPage({ genderFilter: "unisex" });
-            }}
-          >
-            Unisex
-          </Button>
-        </div>
+          />
+        </section>
 
-        <div className="product-controls__filters">
-          <Button
-            onClick={() => {
-              setSearchTerm("");
-              void loadFirstPage({ brandFilter: "Dior" });
-            }}
-          >
-            Dior
-          </Button>
-          <Button
-            onClick={() => {
-              setSearchTerm("");
-              void loadFirstPage({ brandFilter: "Giorgio Armani" });
-            }}
-          >
-            Giorgio Armani
-          </Button>
-          <Button
-            onClick={() => {
-              setSearchTerm("");
-              void loadFirstPage({ brandFilter: "Chanel" });
-            }}
-          >
-            Chanel
-          </Button>
-          <Button
-            onClick={() => {
-              setSearchTerm("");
-              void loadFirstPage({ brandFilter: "Yves Saint Laurent" });
-            }}
-          >
-            Yves Saint Laurent
-          </Button>
-          <Button
-            onClick={() => {
-              setSearchTerm("");
-              void loadFirstPage({ brandFilter: "Tom Ford" });
-            }}
-          >
-            Tom Ford
-          </Button>
-          <Button
-            onClick={() => {
-              setSearchTerm("");
-              void loadFirstPage({ brandFilter: "Creed" });
-            }}
-          >
-            Creed
-          </Button>
-          <Button
-            onClick={() => {
-              setSearchTerm("");
-              void loadFirstPage({ brandFilter: "Maison Francis Kurkdjian" });
-            }}
-          >
-            Maison Francis Kurkdjian
-          </Button>
-        </div>
-      </section>
-
-      <ErrorState
-        id="products"
-        error={error}
-        fallback={<p>No se pudieron cargar los productos.</p>}
-      >
-        <LoadingState
+        <ErrorState
           id="products"
-          loading={loading}
-          fallback={<p>Cargando productos...</p>}
+          error={error}
+          fallback={<p>No se pudieron cargar los productos.</p>}
         >
-          <EmptyState id="products" isEmpty={products.length === 0}>
-            <ProductList />
-          </EmptyState>
-        </LoadingState>
-      </ErrorState>
+          <LoadingState
+            id="products"
+            loading={loading}
+            fallback={<p>Cargando productos...</p>}
+          >
+            <EmptyState id="products" isEmpty={products.length === 0}>
+              <ProductList />
+            </EmptyState>
+          </LoadingState>
+        </ErrorState>
 
-      {!loading && (
-        <LoadMoreButton
-          hasMore={hasMore}
-          loadingMore={loadingMore}
-          onLoadMore={loadMore}
-        />
-      )}
+        {!loading && (
+          <LoadMoreButton
+            hasMore={hasMore}
+            loadingMore={loadingMore}
+            onLoadMore={loadMore}
+          />
+        )}
+      </div>
     </main>
   );
 }

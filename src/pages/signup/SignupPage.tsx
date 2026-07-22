@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthForm } from "../../components/Auth/AuthForm";
 import { useAuth } from "../../contexts/auth/useAuth";
 
@@ -23,6 +23,9 @@ export const SignupPage = () => {
         showName
         showConfirm
         onSubmit={handleSubmit}
+        footer={
+          <Link to="/signin">Inciar Sesión</Link>
+        }
       />
     </main>
   );

@@ -266,13 +266,13 @@ export const AdminFormPage = () => {
           </h1>
         </div>
         <div className="admin-page-actions">
-          <Link to="/admin/products" className="admin-btn admin-btn-secondary">
+          <Link to="/admin/products" className="admin-btn admin-btn-primary">
             Volver a productos
           </Link>
           <button
             type="button"
             onClick={resetForm}
-            className="admin-btn admin-btn-secondary"
+            className="admin-btn admin-btn-primary"
           >
             Limpiar
           </button>
