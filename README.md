@@ -15,6 +15,8 @@
 
 ## 1. ¿Qué hace mi app?
 
+Para ver en desarrollo: [proyecto-m5-lucia-lemes.vercel.app](https://proyecto-m5-lucia-lemes.vercel.app)
+
 Esta aplicación es un ecommerce especializado en la venta de perfumes, desarrollado con el objetivo de ofrecer una experiencia de compra completa, intuitiva y segura para los usuarios.
 
 La plataforma permite navegar por el catálogo de productos sin necesidad de estar registrado, pudiendo visualizar perfumes y consultar sus detalles. Para realizar compras, los usuarios deben contar con una cuenta e iniciar sesión mediante email/contraseña o utilizando autenticación con Google Popup.
