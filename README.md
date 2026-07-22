@@ -191,6 +191,24 @@ Los tests están enfocados en comprobar la lógica principal del ecommerce, vali
   - Limpieza del carrito de un usuario específico.
   - Cálculo correcto de cantidad de productos y precio total.
 
+- **Gestión de productos**
+  - Obtención de productos paginados.
+  - Validación de la existencia de más productos mediante el control de páginas.
+  - Aplicación de filtros por marca.
+  - Aplicación de filtros por género.
+  - Búsqueda de productos mediante términos de búsqueda.
+  - Validación de búsquedas con términos de menos de dos caracteres.
+  - Uso de cursores para la paginación de resultados.
+  - Obtención de todos los productos.
+  - Creación de nuevos productos.
+  - Generación automática del campo `nameLower` para facilitar las búsquedas.
+  - Actualización de productos existentes.
+  - Eliminación de productos.
+  - Obtención de un producto mediante su identificador.
+  - Manejo de productos inexistentes mediante el retorno de `null`.
+  - Incremento y disminución del stock de productos.
+  - Simulación de operaciones con Firebase Firestore mediante mocks para evitar utilizar una base de datos real durante las pruebas.
+
 - **Gestión de órdenes**
   - Creación de órdenes a partir de productos seleccionados.
   - Generación de órdenes desde los elementos del carrito.
@@ -212,9 +230,10 @@ Los tests están enfocados en comprobar la lógica principal del ecommerce, vali
 
 ### Herramientas utilizadas
 
-- **Vitest:** framework utilizado para ejecutar las pruebas.
-- **Testing Library:** utilizada para validar el comportamiento de componentes y hooks de React.
+- **Vitest:** framework utilizado para ejecutar las pruebas unitarias y de integración.
+- **Testing Library:** utilizada para validar el comportamiento de componentes, hooks y contextos de React.
 - **MSW (Mock Service Worker):** utilizada para simular solicitudes HTTP externas sin depender de servicios reales.
+- **Mocks de Firebase Firestore:** utilizados para simular las operaciones de lectura, creación, actualización y eliminación de datos sin conectarse a una base de datos real.
 
 [⬆️ Volver al inicio](#índice)
 
