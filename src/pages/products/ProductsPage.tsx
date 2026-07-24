@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ProductList } from "../../components/Products/List/ProductList";
 import { LoadMoreButton } from "../../components/Products/LoadMoreButton";
 import { SearchBar } from "../../components/Products/SearchBar";
 import { LoadingState } from "../../components/State/Loading.State";
 import { ErrorState } from "../../components/State/Error.State";
 import { EmptyState } from "../../components/State/Empty.State";
+import { ProductGridSkeleton } from "../../components/State/Skeleton";
 import { Button } from "../../UI/Button";
 import { useProducts } from "../../contexts/Products/useProducts";
+import { useDebounce } from "../../hooks/useDebounce";
 import "./ProductsPage.css";
 
 export function ProductPage() {
@@ -21,20 +23,23 @@ export function ProductPage() {
   } = useProducts();
 
   const [searchTerm, setSearchTerm] = useState("");
+  const debouncedSearch = useDebounce(searchTerm, 300);
 
-  const handleSearch = async (value: string) => {
-    setSearchTerm(value);
-
-    const trimmedValue = value.trim();
+  useEffect(() => {
+    const trimmedValue = debouncedSearch.trim();
 
     if (trimmedValue.length === 0) {
-      await loadFirstPage();
+      void loadFirstPage();
       return;
     }
 
     if (trimmedValue.length >= 2) {
-      await loadFirstPage({ searchTerm: trimmedValue });
+      void loadFirstPage({ searchTerm: trimmedValue });
     }
+  }, [debouncedSearch]);
+
+  const handleSearch = (value: string) => {
+    setSearchTerm(value);
   };
 
   return (
@@ -181,7 +186,7 @@ export function ProductPage() {
           <LoadingState
             id="products"
             loading={loading}
-            fallback={<p>Cargando productos...</p>}
+            fallback={<ProductGridSkeleton count={6} />}
           >
             <EmptyState id="products" isEmpty={products.length === 0}>
               <ProductList />
