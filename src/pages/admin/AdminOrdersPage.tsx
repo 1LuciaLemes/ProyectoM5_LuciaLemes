@@ -158,19 +158,19 @@ export const AdminOrdersPage = () => {
                     }
                   >
 
-                    <option value="pendiente">
+                    <option value="Pendiente">
                       Pendiente
                     </option>
 
-                    <option value="procesando">
+                    <option value="Procesando">
                       Procesando
                     </option>
 
-                    <option value="completada">
-                      Completada
+                    <option value="Confirmada">
+                      Confirmada
                     </option>
 
-                    <option value="cancelada">
+                    <option value="Cancelada">
                       Cancelada
                     </option>
 

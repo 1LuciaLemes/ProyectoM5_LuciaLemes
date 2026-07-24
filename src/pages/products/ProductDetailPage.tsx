@@ -5,7 +5,7 @@ import { getProductById } from "../../services/products/productsService";
 import { useCart } from "../../contexts/Cart/useCart";
 import { useAuth } from "../../contexts/auth/useAuth";
 import { Button } from "../../UI/Button";
-import { ShoppingBag } from "lucide-react";
+import { ShoppingBag, ArrowLeft } from "lucide-react";
 import "./ProductDetailPage.css";
 
 export function ProductDetailPage() {
@@ -64,7 +64,8 @@ export function ProductDetailPage() {
   return (
     <main className="product-detail-page">
       <Button className="product-detail-back" onClick={() => navigate(-1)}>
-        ← Volver
+        <ArrowLeft size={16} />
+        Volver
       </Button>
 
       <article className="product-detail">
