@@ -114,6 +114,69 @@ describe("CartReducer", () => {
   });
 
 
+  test("INCREASE_QUANTITY incrementa la cantidad de un item", () => {
+    const state = {
+      itemsByUser: {
+        [customUserFixture.uid]: [
+          { ...cartItemFixture, quantity: 2 },
+        ],
+      },
+    };
+
+    const newState = CartReducer(state, {
+      type: "INCREASE_QUANTITY",
+      userId: customUserFixture.uid,
+      payload: cartItemFixture.id,
+    });
+
+    expect(
+      newState.itemsByUser[customUserFixture.uid][0].quantity
+    ).toBe(3);
+  });
+
+
+  test("DECREASE_QUANTITY decrementa la cantidad de un item", () => {
+    const state = {
+      itemsByUser: {
+        [customUserFixture.uid]: [
+          { ...cartItemFixture, quantity: 3 },
+        ],
+      },
+    };
+
+    const newState = CartReducer(state, {
+      type: "DECREASE_QUANTITY",
+      userId: customUserFixture.uid,
+      payload: cartItemFixture.id,
+    });
+
+    expect(
+      newState.itemsByUser[customUserFixture.uid][0].quantity
+    ).toBe(2);
+  });
+
+
+  test("DECREASE_QUANTITY elimina el item si la cantidad es 1", () => {
+    const state = {
+      itemsByUser: {
+        [customUserFixture.uid]: [
+          { ...cartItemFixture, quantity: 1 },
+        ],
+      },
+    };
+
+    const newState = CartReducer(state, {
+      type: "DECREASE_QUANTITY",
+      userId: customUserFixture.uid,
+      payload: cartItemFixture.id,
+    });
+
+    expect(
+      newState.itemsByUser[customUserFixture.uid]
+    ).toEqual([]);
+  });
+
+
   test("calcula correctamente totalItems y totalPrice", () => {
     const items = [
       {
