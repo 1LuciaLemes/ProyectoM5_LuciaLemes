@@ -62,6 +62,51 @@ export function CartReducer(state: CartState, action: CartAction): CartState {
       };
     }
 
+    case "INCREASE_QUANTITY": {
+      const userItems = getUserItems(state, action.userId);
+
+      return {
+        ...state,
+        itemsByUser: {
+          ...state.itemsByUser,
+          [action.userId]: userItems.map((item) =>
+            item.id === action.payload
+              ? { ...item, quantity: item.quantity + 1 }
+              : item,
+          ),
+        },
+      };
+    }
+
+    case "DECREASE_QUANTITY": {
+      const userItems = getUserItems(state, action.userId);
+      const targetItem = userItems.find((item) => item.id === action.payload);
+
+      if (targetItem && targetItem.quantity <= 1) {
+        return {
+          ...state,
+          itemsByUser: {
+            ...state.itemsByUser,
+            [action.userId]: userItems.filter(
+              (item) => item.id !== action.payload,
+            ),
+          },
+        };
+      }
+
+      return {
+        ...state,
+        itemsByUser: {
+          ...state.itemsByUser,
+          [action.userId]: userItems.map((item) =>
+            item.id === action.payload
+              ? { ...item, quantity: item.quantity - 1 }
+              : item,
+          ),
+        },
+      };
+    }
+
     case "CLEAR_CART":
       return {
         ...state,

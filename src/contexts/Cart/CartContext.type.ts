@@ -29,6 +29,16 @@ export type CartAction =
       payload: string;
     }
   | {
+      type: "INCREASE_QUANTITY";
+      userId: string;
+      payload: string;
+    }
+  | {
+      type: "DECREASE_QUANTITY";
+      userId: string;
+      payload: string;
+    }
+  | {
       type: "CLEAR_CART";
       userId: string;
     };
@@ -40,6 +50,8 @@ export type CartContextType = {
 
   addItem: (product: Product) => void;
   removeItem: (productId: string) => void;
+  increaseQuantity: (productId: string) => void;
+  decreaseQuantity: (productId: string) => void;
   clearCart: () => void;
 };
 

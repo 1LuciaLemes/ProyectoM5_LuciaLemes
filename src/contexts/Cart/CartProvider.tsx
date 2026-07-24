@@ -64,6 +64,45 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     });
   }
 
+  async function increaseQuantity(id: string) {
+    if (!userId) return;
+
+    const updatedItems = items.map((item) =>
+      item.id === id ? { ...item, quantity: item.quantity + 1 } : item,
+    );
+
+    await CartService.updateCartItems(userId, updatedItems);
+
+    dispatch({
+      type: "INCREASE_QUANTITY",
+      userId,
+      payload: id,
+    });
+  }
+
+  async function decreaseQuantity(id: string) {
+    if (!userId) return;
+
+    const targetItem = items.find((item) => item.id === id);
+    let updatedItems: typeof items;
+
+    if (targetItem && targetItem.quantity <= 1) {
+      updatedItems = items.filter((item) => item.id !== id);
+    } else {
+      updatedItems = items.map((item) =>
+        item.id === id ? { ...item, quantity: item.quantity - 1 } : item,
+      );
+    }
+
+    await CartService.updateCartItems(userId, updatedItems);
+
+    dispatch({
+      type: "DECREASE_QUANTITY",
+      userId,
+      payload: id,
+    });
+  }
+
   async function clearCart() {
     if (!userId) return;
 
@@ -83,6 +122,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         totalItems,
         addItem,
         removeItem,
+        increaseQuantity,
+        decreaseQuantity,
         clearCart,
       }}
     >
