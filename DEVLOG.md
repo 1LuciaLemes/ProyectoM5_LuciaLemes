@@ -193,3 +193,33 @@ Implementaciones visuales:
 - Mejora visual en la distribución de los links de navegación entre páginas
 - Footer con nombre
 
+## 23/07/2026
+
+# 1 Revisión de requisitos faltantes contra la consigna
+
+Usé IA para hacer un análisis exhaustivo comparando los requerimientos funcionales de la consigna con el estado actual del proyecto. La IA revisó el código fuente completo y generó una tabla de requisitos faltantes clasificados por gravedad. Esto me permitió identificar funcionalidades que creía implementadas pero que en realidad no estaban, como la búsqueda con debounce, el detalle de producto, la actualización de cantidad en carrito y la simulación de pago.
+
+# 2 Implementación de cantidad de productos en carrito (+/-)
+
+La IA me ayudó a diseñar la implementación de las acciones `INCREASE_QUANTITY` y `DECREASE_QUANTITY` en el reducer del carrito. Analizamos juntos que `DECREASE_QUANTITY` debería eliminar el item si la cantidad llega a 1, en vez de dejarlo en 0. También me orientó sobre cómo persistir estos cambios en Firestore antes de despachar la acción al reducer, manteniendo la consistencia entre estado local y base de datos.
+
+# 3 Búsqueda con debounce y creación de custom hook
+
+La IA me explicó por qué la búsqueda en cada tecla generaba demasiadas consultas a Firestore y me propuso crear un custom hook `useDebounce` que retrase la ejecución de la búsqueda 300ms después del último keystroke. Aprendí que el debounce es un patrón que consiste en usar un timer: cada vez que el usuario escribe, se reinicia el timer, y solo cuando deja de escribir por el tiempo establecido se ejecuta la acción. Esto reduce significativamente las llamadas a la base de datos.
+
+# 4 Flujo de checkout con simulación de pago
+
+Originalmente el botón "Comprar" en el carrito creaba la orden directamente. La IA me sugirió separar esto en un paso intermedio: primero el usuario revisa su carrito, luego navega a una página de checkout con un formulario simulado de tarjeta de crédito, y recién ahí se procesa el pago y se crea la orden. Esto cumple con el requisito de "solo simulación de pago" de la consigna y mejora la experiencia de usuario al dar un paso de confirmación.
+
+# 5 Testeos con renderHook e integración
+
+La IA me ayudó a reescribir los tests del hook `useCart` utilizando `renderHook` de React Testing Library en vez del wrapper manual de componentes consumidores que usaba antes. Me explicó que `renderHook` es la forma estándar de testear custom hooks de forma aislada, ya que devuelve un objeto `result` con el valor retornado por el hook, y permite ejecutar acciones con `act()` para verificar cambios de estado. También creamos tests de integración que simulan flujos completos: agregar producto, verificar cantidad, aumentar, disminuir, y eliminar.
+
+# 6 Detalle de producto y de órdenes
+
+La IA me orientó sobre cómo crear las páginas de detalle de producto (`/products/:id`) y de detalle de órdenes (`/orders/:id`). Para el producto, reutilicé la función `getProductById` que ya existía en el service pero no tenía una página asociada. Para las órdenes, la IA me ayudó a validar que solo el usuario dueño de la orden (o un admin) pueda ver el detalle, agregando una verificación de `userId` antes de renderizar.
+
+# 7 Toast notifications y skeleton animado
+
+La IA me ayudó a crear un sistema simple de toast notifications sin dependencias externas, usando Context + estado. También me mostró cómo implementar un skeleton con animación CSS shimmer (gradiente que se desplaza) para mejorar la percepción de carga, reemplazando los textos planos de "Cargando..." que teníamos antes.
+
