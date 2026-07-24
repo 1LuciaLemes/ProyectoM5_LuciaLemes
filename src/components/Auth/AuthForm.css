@@ -39,6 +39,12 @@
   color: rgba(0, 0, 0, 0.45);
 }
 
+.auth-form__field-error {
+  color: #b91c1c;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
 .error-text {
   color: #b91c1c;
   font-size: 0.95rem;
