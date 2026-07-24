@@ -4,6 +4,7 @@ import { useAuth } from "../../contexts/auth/useAuth";
 import { OrderService } from "../../services/orders/orders.service";
 import type { Order } from "../../types/order.types";
 import { Button } from "../../UI/Button";
+import { ArrowLeft } from "lucide-react";
 import "./OrderDetailPage.css";
 
 export function OrderDetailPage() {
@@ -56,7 +57,8 @@ export function OrderDetailPage() {
   return (
     <main className="order-detail-page">
       <Button className="order-detail-back" onClick={() => navigate(-1)}>
-        ← Volver
+        <ArrowLeft size={16} />
+        Volver
       </Button>
 
       <article className="order-detail">

@@ -19,14 +19,22 @@
 }
 
 .order-detail-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   background: transparent;
-  color: var(--text-primary);
-  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  border: none;
   margin-bottom: 1.5rem;
+  padding: 0.5rem 0.75rem;
   font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  transition: color 0.2s, background-color 0.2s;
 }
 
 .order-detail-back:hover {
+  color: var(--text-primary);
   background: var(--bg-secondary);
 }
 
