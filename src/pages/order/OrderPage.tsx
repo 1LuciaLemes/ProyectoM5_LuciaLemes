@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/auth/useAuth";
 import { OrderService } from "../../services/orders/orders.service";
 import type { Order } from "../../types/order.types";
@@ -6,6 +7,7 @@ import "./OrderPage.css"
 
 export const OrderPage = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -59,7 +61,19 @@ export const OrderPage = () => {
     return (
       <section className="orders-list">
         {orders.map((order) => (
-          <article className="order-card" key={order.id}>
+          <article
+            className="order-card order-card--clickable"
+            key={order.id}
+            onClick={() => navigate(`/orders/${order.id}`)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                navigate(`/orders/${order.id}`);
+              }
+            }}
+          >
             <div className="order-header">
               <div className="order-title">
                 <h3>Orden #{order.id}</h3>

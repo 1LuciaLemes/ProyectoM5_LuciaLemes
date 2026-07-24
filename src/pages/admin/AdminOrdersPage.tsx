@@ -11,6 +11,7 @@ export const AdminOrdersPage = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [statusFilter, setStatusFilter] = useState<OrderStatus | "">("");
 
   const isAdmin = user?.role === "admin";
 
@@ -111,7 +112,26 @@ export const AdminOrdersPage = () => {
 
         <section className="admin-orders-list">
 
-          {orders.map((order) => (
+          <div className="admin-orders-filter">
+            <label className="admin-orders-filter-label">
+              Filtrar por estado:
+              <select
+                className="admin-orders-filter-select"
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value as OrderStatus | "")}
+              >
+                <option value="">Todas</option>
+                <option value="Pendiente">Pendiente</option>
+                <option value="Procesando">Procesando</option>
+                <option value="Confirmada">Confirmada</option>
+                <option value="Cancelada">Cancelada</option>
+              </select>
+            </label>
+          </div>
+
+          {orders
+            .filter((order) => !statusFilter || order.status.toLowerCase() === statusFilter.toLowerCase())
+            .map((order) => (
 
             <article
               className="order-card"

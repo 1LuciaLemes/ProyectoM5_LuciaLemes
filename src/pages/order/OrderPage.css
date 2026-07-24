@@ -47,6 +47,21 @@
   box-shadow: 0 5px 12px var(--shadow-color);
 }
 
+.order-card--clickable {
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.order-card--clickable:hover {
+  border-color: var(--button-bg);
+  box-shadow: 0 5px 16px var(--shadow-color);
+}
+
+.order-card--clickable:focus-visible {
+  outline: 2px solid var(--button-bg);
+  outline-offset: 2px;
+}
+
 
 /* =================
    HEADER
