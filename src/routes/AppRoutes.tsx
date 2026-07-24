@@ -1,8 +1,10 @@
 import { Route, Routes } from "react-router-dom";
 import { CartPage } from "../pages/cart/CartPage";
+import { CheckoutPage } from "../pages/cart/CheckoutPage";
 import { ProductPage } from "../pages/products/ProductsPage";
-// import {HomePage} from "../pages/home/HomePage";
+import { ProductDetailPage } from "../pages/products/ProductDetailPage";
 import {OrderPage} from "../pages/order/OrderPage";
+import { OrderDetailPage } from "../pages/order/OrderDetailPage";
 import { SigninPage } from "../pages/signin/SigninPage";
 import { SignupPage } from "../pages/signup/SignupPage";
 import { AdminPage } from "../pages/admin/AdminPage";
@@ -15,14 +17,16 @@ import { ProtectedRoute } from "./ProtectedRoute";
 export const AppRoutes = () => {
     return (
         <Routes>
-            {/* <Route path="/" element={<HomePage />}></Route> */}
             <Route path="/" element={<ProductPage />}></Route>
+            <Route path="/products/:id" element={<ProductDetailPage />}></Route>
             <Route path="/signin" element={<SigninPage />}></Route>
             <Route path="/signup" element={<SignupPage />}></Route>
 
             <Route element={<ProtectedRoute /> }>
                 <Route path="/cart" element={<CartPage />}></Route>
+                <Route path="/checkout" element={<CheckoutPage />}></Route>
                 <Route path="/orders" element={<OrderPage />}></Route>
+                <Route path="/orders/:orderId" element={<OrderDetailPage />}></Route>
             </Route>
 
             <Route element={<ProtectedRoute requiredRole={"admin"} /> }>

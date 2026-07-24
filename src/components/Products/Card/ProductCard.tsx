@@ -5,6 +5,7 @@ import type { Product } from "../../../contexts/Products/product.type";
 import { useCart } from "../../../contexts/Cart/useCart";
 import { useAuth } from "../../../contexts/auth/useAuth";
 import { useFavorites } from "../../../contexts/Favorites/useFavorites";
+import { useToast } from "../../../components/Toast/Toast";
 import { Button } from "../../../UI/Button";
 import { Heart, ShoppingBag } from "lucide-react";
 import "./ProductCard.css";
@@ -17,6 +18,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const { addItem } = useCart();
   const { user } = useAuth();
   const { isFavorite, toggleFavorite } = useFavorites();
+  const { toast } = useToast();
   const navigate = useNavigate();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
@@ -27,6 +29,7 @@ export function ProductCard({ product }: ProductCardProps) {
     }
 
     addItem(product);
+    toast(`${product.title} agregado al carrito`, "success");
   }
 
   function handleFavoriteClick() {
@@ -36,6 +39,10 @@ export function ProductCard({ product }: ProductCardProps) {
     }
 
     toggleFavorite(product);
+  }
+
+  function handleCardClick() {
+    navigate(`/products/${product.id}`);
   }
 
   function handleSigninRedirect() {
@@ -50,7 +57,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const favoriteActive = isFavorite(product.id);
 
   return (
-    <article className="product-item">
+    <article className="product-item" onClick={handleCardClick} role="link" tabIndex={0} onKeyDown={(e) => { if (e.key === "Enter") handleCardClick(); }}>
       <div className="product-item-image-wrap">
         <img
           className="product-item-img"
@@ -58,7 +65,7 @@ export function ProductCard({ product }: ProductCardProps) {
           alt={product.title}
         />
       </div>
-      <div className="product-item-actions">
+      <div className="product-item-actions" onClick={(e) => e.stopPropagation()}>
         <Button onClick={handleAddToCart} className="product-item-cart-btn button-actions">
           <ShoppingBag size={16} />
           <span>AÑADIR AL CARRITO</span>
