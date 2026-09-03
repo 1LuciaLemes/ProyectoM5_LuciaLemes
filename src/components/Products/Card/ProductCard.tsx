@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import type { Product } from "../../../contexts/Products/product.type";
 import { useCart } from "../../../contexts/Cart/useCart";
 import { useAuth } from "../../../contexts/auth/useAuth";
@@ -12,9 +12,10 @@ import "./ProductCard.css";
 
 type ProductCardProps = {
   product: Product;
+  variant?: "default" | "home";
 };
 
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ product, variant = "default" }: ProductCardProps) {
   const { addItem } = useCart();
   const { user } = useAuth();
   const { isFavorite, toggleFavorite } = useFavorites();
@@ -41,10 +42,6 @@ export function ProductCard({ product }: ProductCardProps) {
     toggleFavorite(product);
   }
 
-  function handleCardClick() {
-    navigate(`/products/${product.id}`);
-  }
-
   function handleSigninRedirect() {
     setIsAuthModalOpen(false);
     navigate("/signin");
@@ -57,34 +54,67 @@ export function ProductCard({ product }: ProductCardProps) {
   const favoriteActive = isFavorite(product.id);
 
   return (
-    <article className="product-item" onClick={handleCardClick} role="link" tabIndex={0} onKeyDown={(e) => { if (e.key === "Enter") handleCardClick(); }}>
-      <div className="product-item-image-wrap">
-        <img
-          className="product-item-img"
-          src={product.image}
-          alt={product.title}
-        />
-      </div>
-      <div className="product-item-actions" onClick={(e) => e.stopPropagation()}>
-        <Button onClick={handleAddToCart} className="product-item-cart-btn button-actions">
-          <ShoppingBag size={16} />
-          <span>AÑADIR AL CARRITO</span>
-        </Button>
+    <article className={`product-item${variant === "home" ? " product-item--home" : ""}`}>
+      <Link className="product-item-image-link" to={`/products/${product.id}`}>
+        <div className="product-item-image-wrap">
+          <img
+            className="product-item-img"
+            src={product.image}
+            alt={product.title}
+          />
+          {variant === "home" && (
+            <button
+              type="button"
+              className={`product-item-heart-btn${favoriteActive ? " is-active" : ""}`}
+              aria-label="Favorito"
+              aria-pressed={favoriteActive}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleFavoriteClick();
+              }}
+            >
+              <Heart size={18} fill={favoriteActive ? "currentColor" : "none"} />
+            </button>
+          )}
+        </div>
+      </Link>
 
-        <button
-          type="button"
-          className={`product-item-heart-btn${favoriteActive ? " is-active" : ""}`}
-          aria-label="Favorito"
-          aria-pressed={favoriteActive}
-          onClick={handleFavoriteClick}
-        >
-          <Heart size={16} fill={favoriteActive ? "currentColor" : "none"} />
-        </button>
-      </div>
+      <h2 className="product-item-title">
+        <Link to={`/products/${product.id}`}>{product.title}</Link>
+      </h2>
 
-      <h2 className="product-item-title">{product.title}</h2>
+      {variant === "home" && (
+        <span className="product-item-brand">{product.brand}</span>
+      )}
 
       <span className="product-item-price">US${product.price}</span>
+
+      {variant === "home" ? (
+        <div className="product-item-home-cart" onClick={(e) => e.stopPropagation()}>
+          <Button onClick={handleAddToCart} className="product-item-cart-btn button-actions">
+            <ShoppingBag size={16} />
+            <span>AÑADIR AL CARRITO</span>
+          </Button>
+        </div>
+      ) : (
+        <div className="product-item-actions" onClick={(e) => e.stopPropagation()}>
+          <Button onClick={handleAddToCart} className="product-item-cart-btn button-actions">
+            <ShoppingBag size={16} />
+            <span>AÑADIR AL CARRITO</span>
+          </Button>
+
+          <button
+            type="button"
+            className={`product-item-heart-btn${favoriteActive ? " is-active" : ""}`}
+            aria-label="Favorito"
+            aria-pressed={favoriteActive}
+            onClick={handleFavoriteClick}
+          >
+            <Heart size={16} fill={favoriteActive ? "currentColor" : "none"} />
+          </button>
+        </div>
+      )}
 
       {isAuthModalOpen &&
         createPortal(
