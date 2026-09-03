@@ -335,15 +335,30 @@ header.site-header a.active {
   justify-content: center;
   align-items: center;
 
-  width: 100%;
+  width: 100vw;
+  max-width: none;
+  margin-inline: calc(50% - 50vw);
 
-  margin-top: auto;
-  padding: 1.5rem 2rem;
+  padding: 2.5rem 2rem;
 
-  border-top: 1px solid var(--border-color);
+  background-color: var(--populars-bg, #ffffff);
 
-  color: var(--text-secondary);
+  color: var(--text-primary);
 
   font-size: 0.85rem;
   text-align: center;
+}
+
+.site-footer__text {
+  margin: 0;
+}
+
+.site-footer__link {
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.site-footer__link:hover {
+  color: var(--text-secondary);
 }
