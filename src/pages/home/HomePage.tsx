@@ -67,7 +67,7 @@ export function HomePage() {
       </section>
 
       {/* Populares */}
-      <section className="home-section">
+      <section className="home-section home-section--populars">
         <div className="home-section__header">
           <h2 className="home-section__title">POPULARES</h2>
           <Link to="/catalog" className="home-section__link">
@@ -82,6 +82,15 @@ export function HomePage() {
                 <ProductCard key={product.id} product={product} variant="home" />
               ))}
         </div>
+      </section>
+
+      {/* Nuestra historia */}
+      <section className="home-story">
+        <h2 className="home-story__title">NUESTRA HISTORIA</h2>
+        <p className="home-story__text">
+          Cada botella es un capítulo - una composición cuidadosamente elaborada
+          de memoria, lugar y estación.
+        </p>
       </section>
     </div>
   );

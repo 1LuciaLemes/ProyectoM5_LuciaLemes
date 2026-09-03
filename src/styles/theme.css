@@ -9,6 +9,10 @@
   --bg-red: #e05858;
   --color-white: white;
 
+  /* Fondos de secciones home */
+  --hero-bg: #f9f8f1;
+  --populars-bg: #ffffff;
+
   /* Texto */
   --text-primary: #303B32;
   --text-secondary: #6C756B;
@@ -37,6 +41,10 @@
   /* Fondos */
   --bg-primary: #1E2520;
   --bg-secondary: #2B342C;
+
+  /* Fondos de secciones home */
+  --hero-bg: #1E2520;
+  --populars-bg: #303a33;
 
   /* Texto */
   --text-primary: #F7F5EC;

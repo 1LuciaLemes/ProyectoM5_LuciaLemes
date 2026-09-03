@@ -9,6 +9,10 @@
 .home-hero {
   position: relative;
 
+  margin-inline: calc(50% - 50vw);
+
+  background-color: var(--hero-bg, #f9f8f1);
+
   overflow: hidden;
 }
 
@@ -132,6 +136,27 @@
   text-align: center;
 }
 
+.home-section--populars {
+  margin-inline: calc(50% - 50vw);
+
+  padding-inline: 1.5rem;
+  box-sizing: border-box;
+
+  background-color: var(--populars-bg, #ffffff);
+}
+
+@media (min-width: 768px) {
+  .home-section--populars {
+    padding-inline: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .home-section--populars {
+    padding-inline: 5rem;
+  }
+}
+
 .home-section__header {
   display: flex;
   flex-direction: column;
@@ -196,4 +221,57 @@
   .home-product-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+}
+
+/*==========
+  NUESTRA HISTORIA
+============*/
+
+.home-story {
+  margin-inline: calc(50% - 50vw);
+
+  padding: 5rem 1.5rem;
+  box-sizing: border-box;
+
+  background-color: var(--hero-bg, #f9f8f1);
+
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .home-story {
+    padding: 6rem 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .home-story {
+    padding: 7rem 5rem;
+  }
+}
+
+.home-story__title {
+  margin: 0 0 1.5rem;
+
+  font-size: 2rem;
+  letter-spacing: 0.05em;
+
+  color: var(--text-primary);
+}
+
+@media (min-width: 768px) {
+  .home-story__title {
+    font-size: 2.5rem;
+  }
+}
+
+.home-story__text {
+  margin: 0 auto;
+
+  max-width: 40rem;
+
+  font-size: 1.15rem;
+  line-height: 1.6;
+
+  color: var(--text-secondary);
 }
