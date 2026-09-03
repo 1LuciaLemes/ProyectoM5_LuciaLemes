@@ -123,6 +123,76 @@ export const getProducts = async (): Promise<Product[]> => {
   return result.products;
 };
 
+const isRealProduct = (p: Product): boolean =>
+  !/ejemplo/i.test(p.title);
+
+export const getNewestProducts = async (limitCount: number): Promise<Product[]> => {
+  const newestQuery = query(
+    productsRef,
+    orderBy("createdAt", "desc"),
+    limit(limitCount * 4),
+  );
+
+  const querySnapshot = await getDocs(newestQuery);
+
+  return querySnapshot.docs
+    .map(
+      (doc) =>
+        ({
+          id: doc.id,
+          ...doc.data(),
+        }) as Product,
+    )
+    .filter(isRealProduct)
+    .slice(0, limitCount);
+};
+
+export const getRandomProducts = async (count: number): Promise<Product[]> => {
+  const querySnapshot = await getDocs(productsRef);
+
+  const allProducts = querySnapshot.docs
+    .map(
+      (doc) =>
+        ({
+          id: doc.id,
+          ...doc.data(),
+        }) as Product,
+    )
+    .filter(isRealProduct);
+
+  const shuffled = [...allProducts].sort(() => Math.random() - 0.5);
+
+  return shuffled.slice(0, count);
+};
+
+export const getProductsByTitles = async (
+  titles: string[],
+): Promise<Product[]> => {
+  const querySnapshot = await getDocs(productsRef);
+
+  const allProducts = querySnapshot.docs
+    .map(
+      (doc) =>
+        ({
+          id: doc.id,
+          ...doc.data(),
+        }) as Product,
+    )
+    .filter(isRealProduct);
+
+  const byTitle = new Map<string, Product>();
+  for (const product of allProducts) {
+    const lower = product.title.trim().toLowerCase();
+    if (!byTitle.has(lower)) {
+      byTitle.set(lower, product);
+    }
+  }
+
+  return titles
+    .map((title) => byTitle.get(title.trim().toLowerCase()))
+    .filter((p): p is Product => p !== undefined);
+};
+
 export const addProduct = async (payload: ProductPayload): Promise<Product> => {
   const newProduct = {
     ...payload,
