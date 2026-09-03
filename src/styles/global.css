@@ -5,17 +5,42 @@
 ====================*/
 
 header.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
   display: flex;
   flex-wrap: wrap;
   align-items: center;
 
-  width: 100%;
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
 
-  border-bottom: 1px solid var(--border-color);
+  background-color: color-mix(in srgb, var(--card-bg) 55%, transparent);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  backdrop-filter: blur(20px) saturate(1.2);
+
+  color: var(--text-primary);
+
+  border-bottom: 1px solid color-mix(in srgb, var(--border-color) 40%, transparent);
 
   margin: 0;
 
-  gap: 0.75rem;
+  gap: 0.5rem;
+  padding-block: 0.4rem;
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  header.site-header {
+    padding-inline: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  header.site-header {
+    padding-inline: 5rem;
+  }
 }
 
 
@@ -23,8 +48,28 @@ header.site-header {
  NAVEGACIÓN Y ACTIONS
 ====================*/
 
+.site-header__inner {
+  position: relative;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  width: 100%;
+
+  gap: 0.75rem;
+}
+
 .site-header__brand {
-  margin-right: 15rem;
+  margin-right: 2.5rem;
+}
+
+.site-header h1 {
+  margin: 0;
+  font-size: 2.2rem;
+  letter-spacing: 0;
+  line-height: 0.7;
+  white-space: nowrap;
 }
 
 .site-header__nav,
@@ -36,7 +81,11 @@ header.site-header {
 }
 
 .site-header__nav {
-  justify-content: flex-start;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
+  justify-content: center;
 }
 
 .site-header__actions {
@@ -89,11 +138,12 @@ header.site-header button {
   color: var(--button-bg);
 
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 0.8rem;
 
-  padding: 0.75rem 1rem;
+  padding: 0.2rem 0.5rem;
 
-  border-radius: 0.75rem;
+  border-radius: 0.4rem;
 
   transition:
     background-color 0.2s ease,
@@ -260,6 +310,20 @@ header.site-header a.active {
   flex: 1;
 
   margin-block: 2rem;
+
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .app-main {
+    padding-inline: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .app-main {
+    padding-inline: 5rem;
+  }
 }
 
 /*==================

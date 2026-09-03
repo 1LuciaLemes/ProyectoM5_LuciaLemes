@@ -10,43 +10,49 @@ export const Header = () => {
   const { totalItems } = useCart();
   return (
     <header className="site-header">
-      <div className="site-header__brand">
-        <BrandTitle />
-      </div>
-      <nav className="site-header__nav">
-        {/* <Link to="/">Inicio</Link> */}
-        <Link to="/">Catálogo</Link>
-        {user?.role === "admin" && <Link to="/admin">Admin</Link>}
-      </nav>
-
-      <div className="site-header__actions">
-        {user && (
-          <>
-            <Link to="/cart" className="site-header__cart">
-              <ShoppingBag size={20} />
-
-              {totalItems > 0 && (
-                <span className="site-header__cart-badge">{totalItems}</span>
-              )}
-            </Link>
-
-            <Link to="/orders">
-              <Package size={20} />
-            </Link>
-          </>
-        )}
-
-        {!user ? (
-          <Link to="/signin">
-            <User size={20} />
+      <div className="site-header__inner">
+        <div className="site-header__brand">
+          <Link to="/">
+            <BrandTitle />
           </Link>
-        ) : (
-          <button type="button" onClick={logout}>
-            <LogOut size={20} />
-          </button>
-        )}
+        </div>
+        <nav className="site-header__nav">
+          <Link to="/">INICIO</Link>
+          <Link to="/catalog">CATÁLOGO</Link>
+          <Link to="/woman">MUJER</Link>
+          <Link to="/man">HOMBRE</Link>
+          {user?.role === "admin" && <Link to="/admin">Admin</Link>}
+        </nav>
 
-        <ThemeButton />
+        <div className="site-header__actions">
+          {user && (
+            <>
+              <Link to="/cart" className="site-header__cart">
+                <ShoppingBag size={20} />
+
+                {totalItems > 0 && (
+                  <span className="site-header__cart-badge">{totalItems}</span>
+                )}
+              </Link>
+
+              <Link to="/orders">
+                <Package size={20} />
+              </Link>
+            </>
+          )}
+
+          {!user ? (
+            <Link to="/signin">
+              <User size={20} />
+            </Link>
+          ) : (
+            <button type="button" onClick={logout}>
+              <LogOut size={20} />
+            </button>
+          )}
+
+          <ThemeButton />
+        </div>
       </div>
     </header>
   );

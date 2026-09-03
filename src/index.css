@@ -6,23 +6,17 @@
 }
 
 body {
-  padding-inline: 1.5rem;
   font-family: var(--font-body);
   background-color: var(--bg-primary);
   color: var(--text-primary);
   transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
 }
 
 @media (min-width: 768px) {
-  body {
-    padding-inline: 3rem;
-  }
 }
 
 @media (min-width: 1024px) {
-  body {
-    padding-inline: 5rem;
-  }
 }
 
 .card {
