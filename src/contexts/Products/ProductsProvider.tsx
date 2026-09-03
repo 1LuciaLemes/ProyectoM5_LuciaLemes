@@ -8,7 +8,7 @@ import {
 import { getProductsPage } from "../../services/products/productsService";
 import type { Product } from "./product.type";
 
-const DEFAULT_PAGE_SIZE = 10;
+const DEFAULT_PAGE_SIZE = 8;
 
 export function ProductsProvider({ children }: { children: React.ReactNode }) {
   const [products, setProducts] = useState<Product[]>([]);

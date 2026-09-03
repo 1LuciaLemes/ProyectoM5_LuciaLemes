@@ -62,21 +62,19 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
             src={product.image}
             alt={product.title}
           />
-          {variant === "home" && (
-            <button
-              type="button"
-              className={`product-item-heart-btn${favoriteActive ? " is-active" : ""}`}
-              aria-label="Favorito"
-              aria-pressed={favoriteActive}
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                handleFavoriteClick();
-              }}
-            >
-              <Heart size={18} fill={favoriteActive ? "currentColor" : "none"} />
-            </button>
-          )}
+          <button
+            type="button"
+            className={`product-item-heart-btn${favoriteActive ? " is-active" : ""}`}
+            aria-label="Favorito"
+            aria-pressed={favoriteActive}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              handleFavoriteClick();
+            }}
+          >
+            <Heart size={18} fill={favoriteActive ? "currentColor" : "none"} />
+          </button>
         </div>
       </Link>
 
@@ -103,16 +101,6 @@ export function ProductCard({ product, variant = "default" }: ProductCardProps) 
             <ShoppingBag size={16} />
             <span>AÑADIR AL CARRITO</span>
           </Button>
-
-          <button
-            type="button"
-            className={`product-item-heart-btn${favoriteActive ? " is-active" : ""}`}
-            aria-label="Favorito"
-            aria-pressed={favoriteActive}
-            onClick={handleFavoriteClick}
-          >
-            <Heart size={16} fill={favoriteActive ? "currentColor" : "none"} />
-          </button>
         </div>
       )}
 
