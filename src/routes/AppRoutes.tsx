@@ -1,7 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import { CartPage } from "../pages/cart/CartPage";
 import { CheckoutPage } from "../pages/cart/CheckoutPage";
+import { HomePage } from "../pages/home/HomePage";
 import { ProductPage } from "../pages/products/ProductsPage";
+import { CategoryPage } from "../pages/category/CategoryPage";
 import { ProductDetailPage } from "../pages/products/ProductDetailPage";
 import {OrderPage} from "../pages/order/OrderPage";
 import { OrderDetailPage } from "../pages/order/OrderDetailPage";
@@ -17,7 +19,10 @@ import { ProtectedRoute } from "./ProtectedRoute";
 export const AppRoutes = () => {
     return (
         <Routes>
-            <Route path="/" element={<ProductPage />}></Route>
+            <Route path="/" element={<HomePage />}></Route>
+            <Route path="/catalog" element={<ProductPage />}></Route>
+            <Route path="/woman" element={<CategoryPage gender="female" />}></Route>
+            <Route path="/man" element={<CategoryPage gender="male" />}></Route>
             <Route path="/products/:id" element={<ProductDetailPage />}></Route>
             <Route path="/signin" element={<SigninPage />}></Route>
             <Route path="/signup" element={<SignupPage />}></Route>

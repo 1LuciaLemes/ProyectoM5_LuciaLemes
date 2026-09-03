@@ -9,9 +9,14 @@ import { ProductGridSkeleton } from "../../components/State/Skeleton";
 import { Button } from "../../UI/Button";
 import { useProducts } from "../../contexts/Products/useProducts";
 import { useDebounce } from "../../hooks/useDebounce";
+import type { ProductGender } from "../../contexts/Products/product.type";
 import "./ProductsPage.css";
 
-export function ProductPage() {
+type ProductPageProps = {
+  initialGender?: ProductGender;
+};
+
+export function ProductPage({ initialGender }: ProductPageProps) {
   const {
     products,
     loading,
@@ -26,10 +31,14 @@ export function ProductPage() {
   const debouncedSearch = useDebounce(searchTerm, 300);
 
   useEffect(() => {
+    void loadFirstPage(initialGender ? { genderFilter: initialGender } : {});
+  }, [initialGender]);
+
+  useEffect(() => {
     const trimmedValue = debouncedSearch.trim();
 
     if (trimmedValue.length === 0) {
-      void loadFirstPage();
+      void loadFirstPage(initialGender ? { genderFilter: initialGender } : {});
       return;
     }
 
@@ -58,23 +67,23 @@ export function ProductPage() {
             </Button>
 
             <Button
-              className="button-filter"
+              className={`button-filter${initialGender === "female" ? " is-active" : ""}`}
               onClick={() => {
                 setSearchTerm("");
                 void loadFirstPage({ genderFilter: "female" });
               }}
             >
-              Femenino
+              Mujer
             </Button>
 
             <Button
-              className="button-filter"
+              className={`button-filter${initialGender === "male" ? " is-active" : ""}`}
               onClick={() => {
                 setSearchTerm("");
                 void loadFirstPage({ genderFilter: "male" });
               }}
             >
-              Masculino
+              Hombre
             </Button>
 
             <Button

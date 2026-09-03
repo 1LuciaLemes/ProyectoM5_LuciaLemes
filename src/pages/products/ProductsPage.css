@@ -81,6 +81,18 @@ button {
   transform: translateY(-1px);
 }
 
+.button-filter.is-active {
+  background: var(--button-bg);
+  color: var(--button-text);
+}
+
+.button-filter.is-active:hover,
+.button-filter.is-active:focus {
+  background: var(--button-bg);
+  color: var(--button-text);
+  transform: translateY(-1px);
+}
+
 
 /*==================
  BÚSQUEDA
