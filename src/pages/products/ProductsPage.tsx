@@ -9,7 +9,7 @@ import { ProductGridSkeleton } from "../../components/State/Skeleton";
 import { Button } from "../../UI/Button";
 import { useProducts } from "../../contexts/Products/useProducts";
 import { useDebounce } from "../../hooks/useDebounce";
-import type { ProductGender } from "../../contexts/Products/product.type";
+import type { ProductBrand, ProductGender } from "../../contexts/Products/product.type";
 import "./ProductsPage.css";
 
 type ProductPageProps = {
@@ -28,27 +28,30 @@ export function ProductPage({ initialGender }: ProductPageProps) {
   } = useProducts();
 
   const [searchTerm, setSearchTerm] = useState("");
+  const [gender, setGender] = useState<ProductGender | undefined>(initialGender);
   const debouncedSearch = useDebounce(searchTerm, 300);
-
-  useEffect(() => {
-    void loadFirstPage(initialGender ? { genderFilter: initialGender } : {});
-  }, [initialGender]);
 
   useEffect(() => {
     const trimmedValue = debouncedSearch.trim();
 
-    if (trimmedValue.length === 0) {
-      void loadFirstPage(initialGender ? { genderFilter: initialGender } : {});
-      return;
-    }
+    const params = {
+      ...(gender ? { genderFilter: gender } : {}),
+      ...(trimmedValue.length >= 2 ? { searchTerm: trimmedValue } : {}),
+    };
 
-    if (trimmedValue.length >= 2) {
-      void loadFirstPage({ searchTerm: trimmedValue });
-    }
-  }, [debouncedSearch]);
+    void loadFirstPage(params);
+  }, [debouncedSearch, gender, loadFirstPage]);
 
   const handleSearch = (value: string) => {
     setSearchTerm(value);
+  };
+
+  const handleSelectBrand = (brandFilter: ProductBrand) => {
+    setSearchTerm("");
+    void loadFirstPage({
+      ...(gender ? { genderFilter: gender } : {}),
+      brandFilter,
+    });
   };
 
   return (
@@ -60,37 +63,37 @@ export function ProductPage({ initialGender }: ProductPageProps) {
               className="button-filter"
               onClick={() => {
                 setSearchTerm("");
-                void loadFirstPage();
+                setGender(undefined);
               }}
             >
               Todos
             </Button>
 
             <Button
-              className={`button-filter${initialGender === "female" ? " is-active" : ""}`}
+              className={`button-filter${gender === "female" ? " is-active" : ""}`}
               onClick={() => {
                 setSearchTerm("");
-                void loadFirstPage({ genderFilter: "female" });
+                setGender("female");
               }}
             >
               Mujer
             </Button>
 
             <Button
-              className={`button-filter${initialGender === "male" ? " is-active" : ""}`}
+              className={`button-filter${gender === "male" ? " is-active" : ""}`}
               onClick={() => {
                 setSearchTerm("");
-                void loadFirstPage({ genderFilter: "male" });
+                setGender("male");
               }}
             >
               Hombre
             </Button>
 
             <Button
-              className="button-filter"
+              className={`button-filter${gender === "unisex" ? " is-active" : ""}`}
               onClick={() => {
                 setSearchTerm("");
-                void loadFirstPage({ genderFilter: "unisex" });
+                setGender("unisex");
               }}
             >
               Unisex
@@ -105,72 +108,49 @@ export function ProductPage({ initialGender }: ProductPageProps) {
             <div className="brands-options">
               <Button
                 className="button-filter"
-                onClick={() => {
-                  setSearchTerm("");
-                  void loadFirstPage({ brandFilter: "Dior" });
-                }}
+                onClick={() => handleSelectBrand("Dior")}
               >
                 Dior
               </Button>
 
               <Button
                 className="button-filter"
-                onClick={() => {
-                  setSearchTerm("");
-                  void loadFirstPage({ brandFilter: "Giorgio Armani" });
-                }}
+                onClick={() => handleSelectBrand("Giorgio Armani")}
               >
                 Giorgio Armani
               </Button>
 
               <Button
                 className="button-filter"
-                onClick={() => {
-                  setSearchTerm("");
-                  void loadFirstPage({ brandFilter: "Chanel" });
-                }}
+                onClick={() => handleSelectBrand("Chanel")}
               >
                 Chanel
               </Button>
 
               <Button
                 className="button-filter"
-                onClick={() => {
-                  setSearchTerm("");
-                  void loadFirstPage({ brandFilter: "Yves Saint Laurent" });
-                }}
+                onClick={() => handleSelectBrand("Yves Saint Laurent")}
               >
                 Yves Saint Laurent
               </Button>
 
               <Button
                 className="button-filter"
-                onClick={() => {
-                  setSearchTerm("");
-                  void loadFirstPage({ brandFilter: "Tom Ford" });
-                }}
+                onClick={() => handleSelectBrand("Tom Ford")}
               >
                 Tom Ford
               </Button>
 
               <Button
                 className="button-filter"
-                onClick={() => {
-                  setSearchTerm("");
-                  void loadFirstPage({ brandFilter: "Creed" });
-                }}
+                onClick={() => handleSelectBrand("Creed")}
               >
                 Creed
               </Button>
 
               <Button
                 className="button-filter"
-                onClick={() => {
-                  setSearchTerm("");
-                  void loadFirstPage({
-                    brandFilter: "Maison Francis Kurkdjian",
-                  });
-                }}
+                onClick={() => handleSelectBrand("Maison Francis Kurkdjian")}
               >
                 Maison Francis Kurkdjian
               </Button>
@@ -182,7 +162,6 @@ export function ProductPage({ initialGender }: ProductPageProps) {
             onSearch={handleSearch}
             onReset={() => {
               setSearchTerm("");
-              void loadFirstPage();
             }}
           />
         </section>

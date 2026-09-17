@@ -1,6 +1,6 @@
 ﻿import type React from "react";
 import type { DocumentSnapshot } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   ProductsContext,
   type ListProductsParams,
@@ -21,44 +21,47 @@ export function ProductsProvider({ children }: { children: React.ReactNode }) {
     Omit<ListProductsParams, "cursor"> | null
   >(null);
 
-  const loadFirstPage = async (
-    params: Omit<ListProductsParams, "cursor"> = {},
-    shouldReset = true,
-  ) => {
-    const normalizedParams: Omit<ListProductsParams, "cursor"> = {
-      pageSize: params.pageSize ?? DEFAULT_PAGE_SIZE,
-      ...(params.brandFilter ? { brandFilter: params.brandFilter } : {}),
-      ...(params.genderFilter ? { genderFilter: params.genderFilter } : {}),
-      ...(params.searchTerm ? { searchTerm: params.searchTerm } : {}),
-    };
+  const loadFirstPage = useCallback(
+    async (
+      params: Omit<ListProductsParams, "cursor"> = {},
+      shouldReset = true,
+    ) => {
+      const normalizedParams: Omit<ListProductsParams, "cursor"> = {
+        pageSize: params.pageSize ?? DEFAULT_PAGE_SIZE,
+        ...(params.brandFilter ? { brandFilter: params.brandFilter } : {}),
+        ...(params.genderFilter ? { genderFilter: params.genderFilter } : {}),
+        ...(params.searchTerm ? { searchTerm: params.searchTerm } : {}),
+      };
 
-    if (shouldReset) {
-      setLoading(true);
-      setError(null);
-      setProducts([]);
-      setLastDoc(null);
-      setHasMore(false);
-    }
-
-    try {
-      const result = await getProductsPage({
-        ...normalizedParams,
-        cursor: null,
-      });
-      setProducts(result.products);
-      setLastDoc(result.lastDoc);
-      setHasMore(result.hasMore);
-      setCurrentParams(normalizedParams);
-    } catch {
-      setError("No se pudieron cargar los productos.");
-    } finally {
       if (shouldReset) {
-        setLoading(false);
+        setLoading(true);
+        setError(null);
+        setProducts([]);
+        setLastDoc(null);
+        setHasMore(false);
       }
-    }
-  };
 
-  const loadMore = async () => {
+      try {
+        const result = await getProductsPage({
+          ...normalizedParams,
+          cursor: null,
+        });
+        setProducts(result.products);
+        setLastDoc(result.lastDoc);
+        setHasMore(result.hasMore);
+        setCurrentParams(normalizedParams);
+      } catch {
+        setError("No se pudieron cargar los productos.");
+      } finally {
+        if (shouldReset) {
+          setLoading(false);
+        }
+      }
+    },
+    [],
+  );
+
+  const loadMore = useCallback(async () => {
     if (!currentParams || !hasMore || loadingMore || !lastDoc) {
       return;
     }
@@ -79,20 +82,20 @@ export function ProductsProvider({ children }: { children: React.ReactNode }) {
     } finally {
       setLoadingMore(false);
     }
-  };
+  }, [currentParams, hasMore, loadingMore, lastDoc]);
 
-  const reset = () => {
+  const reset = useCallback(() => {
     setProducts([]);
     setLastDoc(null);
     setHasMore(false);
     setCurrentParams(null);
     setError(null);
     setLoading(false);
-  };
+  }, []);
 
   useEffect(() => {
     void Promise.resolve().then(() => loadFirstPage());
-  }, []);
+  }, [loadFirstPage]);
 
   return (
     <ProductsContext.Provider
