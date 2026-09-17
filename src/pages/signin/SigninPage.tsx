@@ -27,10 +27,12 @@ export const SigninPage = () => {
         onSubmit={handleSubmit}
         footer={
           <>
-          <button type="button" onClick={handleGoogle} style={{ marginTop: "1rem" }}>
+          <button type="button" className="auth-form__google" onClick={handleGoogle}>
             Iniciar con Google
           </button>
-          <Link to="/signup">Registrarse</Link>
+          <p className="auth-form__footer-text">
+          ¿Aún no tenés cuenta? <Link to="/signup">Registrarse</Link>
+        </p>
           </>
         }
       />

@@ -24,7 +24,9 @@ export const SignupPage = () => {
         showConfirm
         onSubmit={handleSubmit}
         footer={
-          <Link to="/signin">Inciar Sesión</Link>
+          <p className="auth-form__footer-text">
+            ¿Ya tenés cuenta? <Link to="/signin">Iniciar sesión</Link>
+          </p>
         }
       />
     </main>

@@ -178,7 +178,7 @@ export function AuthForm({
         </Button>
       </form>
 
-      {footer}
+      {footer && <div className="auth-form__footer">{footer}</div>}
     </section>
   );
 }
