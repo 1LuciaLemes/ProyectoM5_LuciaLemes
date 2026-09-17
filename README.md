@@ -43,8 +43,8 @@ Entre sus principales funcionalidades se encuentran:
 La aplicación busca simular una tienda online real, integrando servicios externos para autenticación, almacenamiento de información, gestión de recursos y control de acceso según el tipo de usuario.
 
 ### Vista general de la aplicación
-![Catálogo](./src/assets/im1.jpg)
-![Carrito](./src/assets/img2.jpg)
+![Catálogo](./src/assets/im11.png)
+![Carrito](./src/assets/im21.png)
 ![Órdenes](./src/assets/img3.jpg)
 ![AdminProductos](./src/assets/img4.jpg)
 ![AdminÓrdenes](./src/assets/img5.jpg)
