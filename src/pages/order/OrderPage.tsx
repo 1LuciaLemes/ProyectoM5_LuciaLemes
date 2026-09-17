@@ -33,7 +33,7 @@ export const OrderPage = () => {
         const userOrders = await OrderService.getUserOrders(user.uid);
         setOrders(userOrders);
       } catch (err) {
-        console.error("Error cargando ordenes:", err);
+        console.error("Error cargando órdenes:", err);
         setError("No pudimos cargar tus compras en este momento.");
       } finally {
         setLoading(false);
@@ -54,7 +54,7 @@ export const OrderPage = () => {
 
     if (orders.length === 0) {
       return (
-        <p className="orders-message">No tienes ordenes registradas todavía.</p>
+        <p className="orders-message">No tenés órdenes registradas todavía.</p>
       );
     }
 

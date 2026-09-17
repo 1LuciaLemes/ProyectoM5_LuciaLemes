@@ -27,7 +27,7 @@ export const Header = () => {
         <div className="site-header__actions">
           {user && (
             <>
-              <Link to="/cart" className="site-header__cart">
+              <Link to="/cart" className="site-header__cart" aria-label="Carrito">
                 <ShoppingBag size={20} />
 
                 {totalItems > 0 && (
@@ -35,7 +35,7 @@ export const Header = () => {
                 )}
               </Link>
 
-              <Link to="/orders">
+              <Link to="/orders" aria-label="Mis compras">
                 <Package size={20} />
               </Link>
             </>

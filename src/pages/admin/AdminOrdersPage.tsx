@@ -37,8 +37,8 @@ export const AdminOrdersPage = () => {
       setOrders(data);
 
     } catch (err) {
-      console.error("Error cargando ordenes:", err);
-      setError("No pudimos cargar las ordenes en este momento.");
+      console.error("Error cargando órdenes:", err);
+      setError("No pudimos cargar las órdenes en este momento.");
 
     } finally {
       setLoading(false);
@@ -53,8 +53,8 @@ export const AdminOrdersPage = () => {
       setOrders(data);
 
     } catch (err) {
-      console.error("Error cargando ordenes:", err);
-      setError("No pudimos cargar las ordenes en este momento.");
+      console.error("Error cargando órdenes:", err);
+      setError("No pudimos cargar las órdenes en este momento.");
 
     } finally {
       setLoading(false);
