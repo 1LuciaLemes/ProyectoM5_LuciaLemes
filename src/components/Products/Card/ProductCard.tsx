@@ -5,7 +5,7 @@ import type { Product } from "../../../contexts/Products/product.type";
 import { useCart } from "../../../contexts/Cart/useCart";
 import { useAuth } from "../../../contexts/auth/useAuth";
 import { useFavorites } from "../../../contexts/Favorites/useFavorites";
-import { useToast } from "../../../components/Toast/Toast";
+import { useToast } from "../../../components/Toast/useToast";
 import { Button } from "../../../UI/Button";
 import { Heart, ShoppingBag } from "lucide-react";
 import "./ProductCard.css";

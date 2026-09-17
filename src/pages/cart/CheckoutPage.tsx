@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../contexts/Cart/useCart";
 import { useAuth } from "../../contexts/auth/useAuth";
-import { useToast } from "../../components/Toast/Toast";
+import { useToast } from "../../components/Toast/useToast";
 import { OrderService } from "../../services/orders/orders.service";
 import { Button } from "../../UI/Button";
 import "./CheckoutPage.css";
