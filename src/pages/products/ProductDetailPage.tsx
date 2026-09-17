@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import type { Product } from "../../contexts/Products/product.type";
 import { getProductById } from "../../services/products/productsService";
@@ -10,6 +10,11 @@ import "./ProductDetailPage.css";
 
 export function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
+
+  return <ProductDetailContent key={id ?? "sin-id"} id={id} />;
+}
+
+function ProductDetailContent({ id }: { id: string | undefined }) {
   const navigate = useNavigate();
   const { addItem } = useCart();
   const { user } = useAuth();
@@ -21,17 +26,33 @@ export function ProductDetailPage() {
   useEffect(() => {
     if (!id) return;
 
-    setLoading(true);
-    setError(null);
+    let ignore = false;
 
     getProductById(id)
       .then((data) => {
+        if (ignore) return;
         setProduct(data);
         if (!data) setError("Producto no encontrado.");
       })
-      .catch(() => setError("No se pudo cargar el producto."))
-      .finally(() => setLoading(false));
+      .catch(() => {
+        if (!ignore) setError("No se pudo cargar el producto.");
+      })
+      .finally(() => {
+        if (!ignore) setLoading(false);
+      });
+
+    return () => {
+      ignore = true;
+    };
   }, [id]);
+
+  const addedTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (addedTimer.current) clearTimeout(addedTimer.current);
+    };
+  }, []);
 
   const handleAddToCart = () => {
     if (!product) return;
@@ -41,7 +62,8 @@ export function ProductDetailPage() {
     }
     addItem(product);
     setAdded(true);
-    setTimeout(() => setAdded(false), 1500);
+    if (addedTimer.current) clearTimeout(addedTimer.current);
+    addedTimer.current = setTimeout(() => setAdded(false), 1500);
   };
 
   if (loading) {

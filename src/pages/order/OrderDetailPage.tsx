@@ -9,6 +9,11 @@ import "./OrderDetailPage.css";
 
 export function OrderDetailPage() {
   const { orderId } = useParams<{ orderId: string }>();
+
+  return <OrderDetailContent key={orderId ?? "sin-id"} orderId={orderId} />;
+}
+
+function OrderDetailContent({ orderId }: { orderId: string | undefined }) {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [order, setOrder] = useState<Order | null>(null);
@@ -18,11 +23,11 @@ export function OrderDetailPage() {
   useEffect(() => {
     if (!orderId || !user) return;
 
-    setLoading(true);
-    setError(null);
+    let ignore = false;
 
     OrderService.getOrderById(orderId)
       .then((data) => {
+        if (ignore) return;
         if (!data) {
           setError("Orden no encontrada.");
           return;
@@ -34,7 +39,13 @@ export function OrderDetailPage() {
         setOrder(data);
       })
       .catch(() => setError("No se pudo cargar la orden."))
-      .finally(() => setLoading(false));
+      .finally(() => {
+        if (!ignore) setLoading(false);
+      });
+
+    return () => {
+      ignore = true;
+    };
   }, [orderId, user]);
 
   if (loading) {
