@@ -42,11 +42,13 @@ export const Header = () => {
           )}
 
           {!user ? (
-            <Link to="/signin">
+            <Link to="/signin" className="site-header__account">
+              <span className="site-header__label">Iniciar sesión</span>
               <User size={20} />
             </Link>
           ) : (
-            <button type="button" onClick={logout}>
+            <button type="button" onClick={logout} className="site-header__account">
+              <span className="site-header__label">Cerrar sesión</span>
               <LogOut size={20} />
             </button>
           )}
