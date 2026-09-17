@@ -76,7 +76,7 @@
 .product-detail-title {
   margin: 0;
   font-size: clamp(1.8rem, 3vw, 2.5rem);
-  color: var(--text-h);
+  color: var(--text-primary);
 }
 
 .product-detail-description {
